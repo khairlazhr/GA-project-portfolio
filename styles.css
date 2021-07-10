@@ -1,0 +1,37 @@
+/* body {
+    
+} */
+
+#board-holder {
+    width: 600px;
+    height: 600px;
+    background-color: rgb(255, 175, 55);
+    text-align: center;
+}
+
+#board {
+    width: 500px;
+    height: 500px;
+    border: solid black;
+    table-layout: fixed;
+}
+
+tr, td {
+    border: solid black;
+}
+
+.dot-black {
+    height: 20px;
+    width: 20px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-white {
+    height: 20px;
+    width: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    display: inline-block;
+}

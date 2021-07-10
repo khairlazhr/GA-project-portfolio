@@ -3,28 +3,28 @@
 
 // click function to enable player turn
 var turn = 0 // 1st player
-
+var clicked = false
 // 2D array checking for winner
-
-function tileClick(row, tile) {
-    var clicked = document.getElementById("board").children[row].children[tile];
-    if (turn) {
-      clicked.innerHTML = "o";
-      clicked.style.color = "red";
-      turn = 0;
-    } else {
-      clicked.innerHTML = "x";
-      clicked.style.color = "blue";
-      turn = 1;
+// click on tile (need it so it wont be overwritten)
+function tileClick(cell) {
+    if (cell.innerHTML==="") {
+      if (turn === 0) {
+        cell.innerHTML = "<span class='dot-black'></span>";
+        turn = 1;
+      } else {
+        cell.innerHTML = "<span class='dot-white'></span>";
+        turn = 0;
+      }
     }
+    
 }
-
+// tables keep expanding
 
 // generate board
 
 
 const board = document.createElement('table')
-board.setAttribute = ('id', 'board')
+board.setAttribute('id', 'board')
 document.querySelector('#board-holder').append(board)
 
 function buildBoard(rows, columns) {
@@ -38,10 +38,17 @@ function buildBoard(rows, columns) {
     }
 }
 
+
 buildBoard(15,15)
+document.querySelector('#board').addEventListener('click', function(e) {
+  if (e.target !== this) {
+    tileClick(e.target)
+  }
 
-document.querySelector('board').addEventListener('click', )
 
+}
+)
+console.log(document.querySelector('#board').children)
 
 // Additional stuff
 
