@@ -1,36 +1,41 @@
-/* body {
-    
-} */
-
-#board-holder {
-    width: 600px;
-    height: 600px;
-    background-color: rgb(255, 175, 55);
-    text-align: center;
+body {
+    background-color: rgb(255, 202, 133);
 }
 
 #board {
-    width: 500px;
-    height: 500px;
-    border: solid black;
-    table-layout: fixed;
+    margin: auto;
+    margin-top: 10px;
+    width: 450px;
+    height: 450px;
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(15, 30px);
 }
 
-tr, td {
-    border: solid black;
+.boardRow {
+    display: grid;
+    grid-template-columns: repeat(15, minmax(0, 1fr));
+}
+  
+.boardColumn {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dot-black {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
     background-color: black;
     border-radius: 50%;
     display: inline-block;
 }
 
 .dot-white {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
     background-color: rgb(255, 255, 255);
     border-radius: 50%;
     display: inline-block;
