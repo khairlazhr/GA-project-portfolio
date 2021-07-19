@@ -1,3 +1,9 @@
+const gameState = {
+  state: "initial"
+}
+
+var turn = 0 
+var gameOver = false
 // Starting Phase
 
 
@@ -7,67 +13,21 @@
 // Game Phase
 
 // click function to enable player turn
-var turn = 0 // 1st player
-var gameOver = false
+
 // 2D array checking for winner
 
-function checkWinner() {
-
+function checkWinner(cell) {
+  if (checkForEveryLoop(cell)) {
+    if (cell.dataset.clicked === "1") {
+      alert("Black wins!")
+    } else {
+      alert("White wins!")
+    }
+  }
 }
 
 //
 
-function checkWinner(cell) {
-
-}
-
-
-// check horizontal
-
-function checkHorizontal(cell) {
-  const row = cell.dataset.row
-  const col = parseInt(cell.dataset.col)
-  for (let i= 1; i < 5; i++) { // checks right on the fifth node
-    var nextCol = (col + i)
-    if (boardCell(row,nextCol) === undefined) {
-      return false
-    }
-    if (cell.dataset.clicked !== boardCell(row,nextCol).dataset.clicked) {
-        return false
-    }
-  }
-  return true 
-}
-
-function checkLeft(cell) {
-  const row = cell.dataset.row
-  const col = parseInt(cell.dataset.col)
-  for (let i= -4; i < 0; i++) {
-    var nextCol = (col + i)
-    if (boardCell(row,nextCol) === undefined) {
-      return false
-    }
-    if (cell.dataset.clicked !== boardCell(row,nextCol).dataset.clicked) {
-        return false
-    }
-  }
-  return true
-}
-
-// function checkDownFifthNode(cell) {
-//   const row = parseInt(cell.dataset.row)
-//   const col = cell.dataset.col
-//   for (let i= 1; i < 5; i++) {
-//     var nextRow = (row + i)
-//     if (boardCell(row,nextCol) === undefined) {
-//       return false
-//     }
-//     if (cell.dataset.clicked !== boardCell(nextRow, col).dataset.clicked) {
-//         return false
-//     }
-//   } 
-//   return true
-// }
 
 
 // selector function for cells
@@ -77,56 +37,99 @@ function boardCell(row, tile) {
 
 // check function
 
-function checkForLoop(cell, direction, node) {
-  const row = cell.dataset.row
+function toCheckHorizontal(row, col, j, k) {
+  for (let i = j; i < k; i++) {
+    var nextCol = (col + i)
+    if (nextCol < 0 || nextCol > 14) {
+      return false
+    }
+    if (boardCell(row,col).dataset.clicked !== boardCell(row,nextCol).dataset.clicked) {
+      return false
+    }
+  }
+  return true
+}
+
+function toCheckVertical(row, col, j, k) {
+  for (let i = j; i < k; i++) {
+    var nextRow = (row + i)
+    if (nextRow < 0 || nextRow > 14) {
+      return false
+    }
+    if (boardCell(row,col).dataset.clicked !== boardCell(nextRow, col).dataset.clicked) {
+        return false
+    }
+  } 
+  return true
+}
+
+function toCheckDiagonalDown(row, col, j, k) {
+  for (let i= j; i < k; i++) {
+    var nextRow = (row + i)
+    var nextCol = (col + i)
+    if (nextRow < 0 || nextCol < 0 || nextRow > 14 || nextCol > 14) {
+      return false
+    }
+    if (boardCell(row,col).dataset.clicked !== boardCell(nextRow, nextCol).dataset.clicked) {
+      return false
+    }
+  }
+  return true
+}
+
+function toCheckDiagonalUp(row, col, j, k) {
+  for (let i= j; i < k; i++) {
+    var nextRow = (row - i)
+    var nextCol = (col + i)
+    if (nextRow < 0 || nextCol < 0 || nextRow > 14 || nextCol > 14) {
+      return false
+    }
+    if (boardCell(row,col).dataset.clicked !== boardCell(nextRow, nextCol).dataset.clicked) {
+      return false
+    }
+  }
+  return true
+} 
+
+
+function checkForEveryLoop(cell) {
+  const row = parseInt(cell.dataset.row)
   const col = parseInt(cell.dataset.col)
-  switch (direction) {
-    case "left":
-      
-      switch (node){
-        case "fifth":
-          for (let i= -4; i < 0; i++) {
-            toCheckFunction(cell, row, col, i)
-          }
-          return true
-        case "fourth":
-          for (let i= -3; i < 2; i++) {
-            toCheckFunction(cell, row, col, i)
-          }
-          return true
-        case "third":
-          for (let i= -2; i < 3; i++) {
-            toCheckFunction(cell, row, col, i)
-          }
-          return true
-      }
-    case "right":
-      switch (node) {
-        case "fifth":
-          for (let i= 1; i < 5; i++) { // checks right on the fifth node
-            var nextCol = (col + i)
-            if (boardCell(row,nextCol) === undefined) {
-              return false
-            }
-            if (cell.dataset.clicked !== boardCell(row,nextCol).dataset.clicked) {
-              return false
-              }
-            }
-            return true
-      }
-      
+  // left function
+  if (toCheckHorizontal(row, col, -4, 0) || 
+  toCheckHorizontal(row, col, -3, 2) || 
+  toCheckHorizontal(row, col, 1, 5) ||
+  toCheckHorizontal(row, col, -1, 4) ||
+
+  // up functions 
+  toCheckVertical(row, col, -4, 0) ||
+  toCheckVertical(row, col, -3, 2) ||
+  toCheckVertical(row, col, 1, 5) ||
+  toCheckVertical(row, col, -1, 4) ||
+
+  // check Diagonal Down
+  toCheckDiagonalDown(row, col, -4, 0) ||
+  toCheckDiagonalDown(row, col, -3, 2) ||
+  toCheckDiagonalDown(row, col, -1, 4) ||
+  toCheckDiagonalDown(row, col, 1, 5) ||
+
+  // check Diagonal Up
+  toCheckDiagonalUp(row, col, -4, 0) ||
+  toCheckDiagonalUp(row, col, -3, 2) ||
+  toCheckDiagonalUp(row, col, -1, 4) ||
+  toCheckDiagonalUp(row, col, 1, 5) ||
+
+  // check middle Directions
+  toCheckHorizontal(row, col, -2, 3) ||
+  toCheckVertical(row, col, -2, 3) ||
+  toCheckDiagonalDown(row, col, -2, 3) ||
+  toCheckDiagonalUp(row, col, -2, 3)) {
+    return true
+  } else {
+    return false
   }
 }
 
-function toCheckFunction(cell, row, col, i) {
-  var nextCol = (col + i)
-  if (boardCell(row,nextCol) === undefined) {
-    return false
-  }
-  if (cell.dataset.clicked !== boardCell(row,nextCol).dataset.clicked) {
-    return false
-  }
-}
 
 // click on tile so the black and white tiles display
 function tileClick(cell) {
@@ -142,6 +145,7 @@ function tileClick(cell) {
       cell.dataset.clicked = "2"
       turn = 0;
     }
+    checkWinner(cell)
   }
 }
 
@@ -171,8 +175,6 @@ document.querySelector('#board').addEventListener('click', function(e) {
   if (e.target !== this) {
     tileClick(e.target)
   }
-  checkForLoop(e.target, "left", "third")
-  console.log(checkForLoop(e.target, "left", "third"))
 })
 
 
