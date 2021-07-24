@@ -2,12 +2,48 @@ body {
     background-color: rgb(255, 202, 133);
 }
 
+h1 {
+    text-align: center;
+}
+
+span {
+    font-weight: bold;
+}
+
+#p1-box, #p2-box {
+    text-align: center;
+}
+
+.container-sm {
+    border: 1px solid black;
+    width: 600px;
+
+}
+
+.btn-success {
+    margin-top: 5px;
+    margin-left: auto;
+}
+
+#congrats {
+    font-size: 15px;
+}
+
+#display {
+    text-align: center;
+}
+
+#display-title {
+    font-size: 18px;
+}
+
 #board {
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 10px;
     width: 450px;
     height: 450px;
-    border: 2px solid black;
+    border: 1px solid black;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: repeat(15, 30px);
@@ -39,4 +75,17 @@ body {
     background-color: rgb(255, 255, 255);
     border-radius: 50%;
     display: inline-block;
+}
+
+#reset-button {
+    float: right;
+    margin-right: 60px;
+}
+
+#rule-button {
+    margin-left: 60px;
+}
+
+#p1-title, #p2-title {
+    text-decoration: underline;
 }
