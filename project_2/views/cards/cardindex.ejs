@@ -1,0 +1,74 @@
+<%- include("../partials/header.ejs") %>
+  <div class="container">
+    <div class="d-none d-md-block">
+      <form 
+        class="form form-inline d-flex justify-content-center" 
+        id="card_search" 
+        action="/cards/search"
+        method="GET"
+      >
+        <input 
+          placeholder="Name" 
+          class="form-control form-control-sm" 
+          type="search" 
+          name="name" 
+          id="name"
+        >
+        <input 
+          placeholder="Number" 
+          class="form-control form-control-sm" 
+          type="search" 
+          name="number" 
+          id="number"
+        >
+        <select class="form-control form-control-sm" name="type" id="type">
+          <option value="">All Types</option>
+          <option value="0">Normal</option>
+          <option value="1">Primal</option>
+          <option value="2">Scion</option>
+          <option value="3">Beastman</option>
+          <option value="4">Garlean</option>
+        </select>
+        <select class="form-control form-control-sm" name="stars" id="stars">
+          <option value="">All Rarities</option>
+          <option value="5">5-star</option>
+          <option value="4">4-star</option>
+          <option value="3">3-star</option>
+          <option value="2">2-star</option>
+          <option value="1">1-star</option>
+        </select>
+        <input 
+          type="submit" 
+          value="Search" 
+          class="btn btn-secondary"
+        >
+      </form>
+    </div>
+    <div>
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Icon</th>
+              <th scope="col">Name</th>
+              <th scope="col">Rarity</th>
+              <th scope="col">Type</th>
+              <th scope="col">Acquisition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (const item of card) { %>
+              <tr>
+                <th scope="row"><%= item.id %></th>
+                <td><img src="<%= item.icon %>"></td>
+                <td><%= item.name %></td>
+                <td><%= item.stars %></td>
+                <td><%= item["type"].name %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+      
+<%- include("../partials/footer.ejs") %>
