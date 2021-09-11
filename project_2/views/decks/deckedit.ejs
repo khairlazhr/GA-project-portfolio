@@ -1,0 +1,346 @@
+<%- include("../partials/header.ejs") %>
+<div class="container">
+    <form class="form deck-submit" id="new_deck" action="/decks/<%= deck.id %>?_method=PUT" method="POST">
+        <div class="row mt-3 justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0">Deck Details</h4>
+                        <div class="d-inline-flex">
+                            <input type="submit" class="btn btn-primary mt-2 mx-2" value="Update Deck">
+                            <div class='d-flex justify-content-center'>
+                              <form id="deleteForm" method="POST" action="/decks/<%= deck.id %>?_method=DELETE">
+                                <input type="submit" class="btn btn-danger mt-2" value="Delete Deck" form="deleteForm">
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="d-flex justify-content-start">
+                            <h5>Usage</h5>
+                            <div class="form-check mx-2">
+                                <input onchange="filterCheck()" class="form-check-input" type="radio" name="flexRadioDefault" value="General" id="general" checked>
+                                <label class="form-check-label" for="general">General</label>
+                              </div>
+                              <div class="form-check mx-2">
+                                <input onchange="filterCheck()" class="form-check-input" type="radio" name="flexRadioDefault" id="rule-filter">
+                                <label class="form-check-label" for="rule-filter">Rule</label>
+                              </div>
+                              <div class="form-check mx-2">
+                                <input onchange="filterCheck()"  class="form-check-input" type="radio" name="flexRadioDefault" id="npc-filter">
+                                <label class="form-check-label" for="npc-filter">NPCs</label>
+                               </div>
+                              <select class="form-control form-control-sm mx-2 d-none" name="rule" id="rule">
+                                <option value="">Add Rule Usage</option>
+                                <option value="all-open">All Open</option>
+                                <option value="ascension">Ascension</option>
+                                <option value="chaos">Chaos</option>
+                                <option value="descension">Descension</option>
+                                <option value="fallen-ace">Fallen Ace</option>
+                                <option value="order">Order</option>
+                                <option value="plus">Plus</option>
+                                <option value="random">Random</option>
+                                <option value="reverse">Reverse</option>
+                                <option value="roulette">Roulette</option>
+                                <option value="same">Same</option>
+                                <option value="sudden-death">Sudden Death</option>
+                                <option value="swap">Swap</option>
+                                <option value="three-open">Three Open</option>
+                            </select>
+                            <select class="form-control form-control-sm mx-2 d-none" name="npc" id="npc">
+                                <option value="">Add NPC Usage</option>
+                                <option value="baderon">Baderon</option>
+                                <option value="mordyn">Mordyn</option>
+                                <option value="o'kalkaya">O'kalkaya</option>
+                                <option value="r'ashaht-rhiki">R'ashaht Rhiki</option>
+                                <option value="wawalgo">Wawalago</option>
+                                <option value="mimidoa">Mimidoa</option>
+                                <option value="trachtoum">Trachtoum</option>
+                                <option value="gegeruju">Gegeruju</option>
+                                <option value="memeroom">Memeroon</option>
+                                <option value="momodi">Momodi</option>
+                                <option value="swift">Swift</option>
+                                <option value="wymond">Wymond</option>
+                                <option value="yayake">Yayake</option>
+                                <option value="droyn">Droyn</option>
+                                <option value="yellow-moon">Yellow Moon</option>
+                                <option value="fufulupa">Fufulupa</option>
+                                <option value="f'hobhas">F'hobhas</option>
+                                <option value="roger">Roger</option>
+                                <option value="helmhart">Helmhart</option>
+                                <option value="hab">Hab</option>
+                                <option value="maisenta">Maisenta</option>
+                                <option value="mother-miounne">Mother Miounne</option>
+                                <option value="vorsaile-heuloix">Vorsaile Heuloix</option>
+                                <option value="noes">Noes</option></optgroup>
+                                <option value="marcette">Marcette</option>
+                                <option value="piralnaut">Piralnaut</option>
+                                <option value="buscarron">Buscarron</option>
+                                <option value="landenel">Landenel</option>
+                                <option value="sezul-totoloc">Sezul Totoloc</option>
+                                <option value="joellaut">Joellaut</option>
+                                <option value="ourdilic">Ourdilic</option>
+                                <option value="indolent-imperial">Indolent Imperial</option>
+                                <option value="klynthota">Klynthota</option>
+                                <option value="rowena">Rowena</option>
+                                <option value="aurifort">Aurifort of the Three Clubs</option>
+                                <option value="guhtwint">Guhtwint of the Three Diamonds</option>
+                                <option value="jonas">Jonas of the Three Spades</option>
+                                <option value="king-elmer">King Elmer III</option>
+                                <option value="lewena">Lewena</option>
+                                <option value="ruthwyda">Ruhtwyda of the Three Hearts</option>
+                                <option value="triple-triad-master">Triple Triad Master</option>
+                                <option value="flichoirel">Flichoirel the Lordling</option>
+                                <option value="hall-overseer">Hall Overseer</option>
+                                <option value="nell">Nell Half-full</option>
+                                <option value="prideful-stag">Prideful Stag</option>
+                                <option value="wyra">Wyra “Greenhands” Lyehga</option>
+                                <option value="marcechamp">Marcechamp</option>
+                                <option value="vath-deftarm">Vath Deftarm</option>
+                                <option value="voracious-vath">Voracious Vath</option>
+                                <option value="mero-roggo">Mero Roggo</option>
+                                <option value="tapklix">Tapklix</option>
+                                <option value="mogzin">Master Mogzin</option>
+                                <option value="mogmil">Mogmill</option>
+                                <option value="midnight-dew">Midnight Dew</option>
+                                <option value="redbill-storeboy">Redbill Storeboy</option>
+                                <option value="seika">Seika</option>
+                                <option value="laniaitte">Laniaitte</option>
+                                <option value="linu-vali">Linu Vali</option>
+                                <option value="marielle">Marielle</option>
+                                <option value="idle-imperial">Idle Imperial</option>
+                                <option value="dominiac">Dominiac</option>
+                                <option value="gibrillont">Gibrillont</option>
+                                <option value="elaisse">Elaisse</option>
+                                <option value="house-fortemps-manservant">House Fortemps Manservant</option>
+                                <option value="ercanbald">Ercanbald</option>
+                                <option value="ironworks-hand">Ironworks Hand</option>
+                                <option value="botan">Botan</option>
+                                <option value="hanagasa">Hanagasa</option>
+                                <option value="hetsukaze">Hetsukaze</option>
+                                <option value="hokushin">Hokushin</option>
+                                <option value="kikimo">Kikimo</option>
+                                <option value="kotokaze">Kotokaze</option>
+                                <option value="garima">Garima</option>
+                                <option value="imperial-deserter">Imperial Deserter</option>
+                                <option value="umber-torrent">Umber Torrent</option>
+                                <option value="isobe">Isobe</option>
+                                <option value="kaizan">Kaizan</option>
+                                <option value="tsuzura">Tsuzura</option>
+                                <option value="ushiogi">Ushiogi</option>
+                                <option value="yusui">Yusui</option>
+                                <option value="gyoei">Gyoei</option>
+                                <option value="hachinan">Hachinan</option>
+                                <option value="masatsuchi">Masatsuchi</option>
+                                <option value="munglig">Munglig</option>
+                                <option value="nigen">Nigen</option>
+                                <option value="ogodei">Ogodei</option>
+                                <option value="kiuka">Kiuka</option>
+                                <option value="glynard">Glynard</option>
+                                <option value="grewenn">Grewenn</option>
+                                <option value="cobleva">Cobleva</option>
+                                <option value="lamlyn">Lamlyn</option>
+                                <option value="ibenart">Ibenart</option>
+                                <option value="drery">Drery</option>
+                                <option value="lewto-sue">Lewto-Sue</option>
+                                <option value="eo-sigun">Eo Sigun</option>
+                                <option value="gyuf-uin">Gyuf Uin</option>
+                                <option value="hargra">Hargra</option>
+                                <option value="redard">Redard</option>
+                                <option value="saushs-koal">Saushs Koal</option>
+                                <option value="arsieu">Arsieu</option>
+                                <option value="sladkey">Sladkey</option>
+                                <option value="former-imperial">Furtive Former Imperial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+              <div class="col-8">
+                  <div class="card">
+                      <div class="card-header d-flex align-items-center justify-content-between">
+                          <h4 class="mb-0">Cards</h4>
+                      </div>
+                      <div class="card-body">
+                          <div class="row">
+                              <div class="d-flex justify-content-center card-list-lg flex-grow-1 flex-wrap" id="deck">
+                                <div onclick="removeCard(event)" id="card1">
+                                  <input type="hidden"  class="form-control" name="card1id" id="card1id" value="<%= deck.cards.card1id %>">
+                                  <img class="mx-2" src="<%= cards[deck.cards.card1id-1].image %>">
+                                </div>
+                                <div onclick="removeCard(event)" id="card2">
+                                  <input type="hidden"  class="form-control" name="card2id" id="card2id" value="<%= deck.cards.card2id %>">
+                                  <img class="mx-2"  src="<%= cards[deck.cards.card2id-1].image %>">
+                                </div>
+                                <div onclick="removeCard(event)" id="card3">
+                                  <input type="hidden"  class="form-control" name="card3id" id="card3id" value="<%= deck.cards.card3id %>">
+                                  <img class="mx-2"  src="<%= cards[deck.cards.card3id-1].image %>">
+                                </div>
+                                <div onclick="removeCard(event)" id="card4">
+                                  <input type="hidden"  class="form-control" name="card4id" id="card4id" value="<%= deck.cards.card4id %>">
+                                  <img class="mx-2"  src="<%= cards[deck.cards.card4id-1].image %>">
+                                </div>
+                                <div onclick="removeCard(event)" id="card5">
+                                  <input type="hidden"  class="form-control" name="card5id" id="card5id" value="<%= deck.cards.card5id %>">
+                                  <img class="mx-2"  src="<%= cards[deck.cards.card5id-1].image %>">
+                                </div>
+                              </div>
+                            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row mt-3 justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center n">
+                        <h4 class="mb-0">Notes</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <textarea name="notes" class="form-control"><%= deck.notes %></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+      </form>
+        <div class="row mt-3 justify-content-center">
+            <div class="col-8">
+              <div class="card shadow">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h4 class="mb-0">Find Cards</h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class= "justify-content-between d-flex">
+                      <div class="col-1">
+                        <h5>Icon</h5>
+                      </div>
+                      <div class="col-2">
+                        <h5>Name</h5>
+                      </div>
+                      <div class="col-1 d-flex justify-content-center">
+                        <h5>Rarity</h5>
+                      </div>
+                      <div class="col-1 d-flex justify-content-center">
+                        <h5>Type</h5>
+                      </div>
+                      <div class="col-1 d-flex justify-content-center">
+                        <h5>Stats</h5>
+                      </div>
+                      <div class="col-1">
+                        <h5>Add?</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="overflow-auto" id="deck-card-table">
+                  <% for (const item of cards) { %>
+                    <div class="row">
+                      <div class="table-row d-flex align-items-center justify-content-between">
+                        <div class="col-1">
+                          <a href="/cards/<%= item.id %>"><img src="<%= item.icon %>"></a>
+                        </div>
+                        <div class="col-2 px-1">
+                          <a href="/cards/<%= item.id %>" class="table-link">
+                            <p><%= item.name %></p>
+                          </a>
+                        </div>
+                        <div class="col-1 d-flex justify-content-center">
+                          <p><%= item.stars %><i class="fa fa-star"></i></p>
+                        </div>
+                        <div class="col-1 d-flex justify-content-center">
+                          <% if (item['type'].image) { %>
+                            <img class="beast-icon" src="<%= item['type'].image %>">
+                          <% } %>
+                        </div>
+                        <div class="col-1 d-flex flex-column stats p-2">
+                          <div class="d-flex justify-content-center">
+                            <span><%= item.stats.numeric.top %></span>
+                          </div>
+                          <div class="d-flex justify-content-around">
+                            <span><%= item.stats.numeric.left %></span>
+                            <span><%= item.stats.numeric.right %></span>
+                          </div>
+                          <div class="d-flex justify-content-center">
+                            <span><%= item.stats.numeric.bottom %></span>
+                          </div>
+                        </div>
+                        <button onclick= "addCard(event)" name="button" type="submit" class="btn btn-secondary btn-sm" data-image="<%= item.image %>" data-cardid="<%= item.id %>" data-name="<% item.name %>" data-action="add">Add</button>
+                      </div>
+                    </div>   
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    <script>
+        function addCard(event) {
+            insertValue(event);
+          }
+        function insertValue(event) {
+          const array = [document.querySelector("#card1id").value, document.querySelector("#card2id").value, document.querySelector("#card3id").value, document.querySelector("#card4id").value, document.querySelector("#card5id").value]
+          if (document.querySelector("#card1id").value === "") {
+              document.querySelector("#card1id").value = event.target.dataset.cardid
+              array[0] = document.querySelector("#card1id").value
+              addImage(1)
+            } else if (document.querySelector("#card2id").value === "") {
+              if (!array.includes(event.target.dataset.cardid)) {
+                document.querySelector("#card2id").value = event.target.dataset.cardid
+                array[1] = document.querySelector("#card2id").value
+                addImage(2)
+              }
+            } else if (document.querySelector("#card3id").value === "") {
+              if (!array.includes(event.target.dataset.cardid)) {
+                document.querySelector("#card3id").value = event.target.dataset.cardid
+                array[2] = document.querySelector("#card3id").value
+                addImage(3)
+              }
+            } else if (document.querySelector("#card4id").value === "") {
+              if (!array.includes(event.target.dataset.cardid)) {
+                document.querySelector("#card4id").value = event.target.dataset.cardid
+                array[3] = document.querySelector("#card4id").value
+                addImage(4)
+              }
+            } else if (document.querySelector("#card5id").value === "") {
+              if (!array.includes(event.target.dataset.cardid)) {
+                document.querySelector("#card5id").value = event.target.dataset.cardid
+                array[4] = document.querySelector("#card5id").value
+                addImage(5)
+              } 
+            } 
+        }
+        function addImage(no) { 
+            let img = document.createElement("img")
+            img.setAttribute("src", `${event.target.dataset.image}`)
+            document.querySelector(`#card${no}`).appendChild(img)
+        }
+        function filterCheck() {
+          if (document.querySelector('#rule-filter').checked)  {
+            document.querySelector("#rule").classList.remove('d-none')
+            document.querySelector("#npc").classList.add("d-none")
+          } else if (document.querySelector('#npc-filter').checked){
+            document.querySelector("#rule").classList.add("d-none")
+            document.querySelector("#npc").classList.remove("d-none")
+          } else if (document.querySelector("#general").checked) {
+            document.querySelector("#rule").classList.add("d-none")
+            document.querySelector("#npc").classList.add("d-none")
+          }
+        }
+        function removeCard(event) {
+          clearValue(event.currentTarget.id)
+          removeImage(event.currentTarget)
+  
+        }
+        function clearValue(e) {
+          document.querySelector(`#${e}id`).value = ""
+        }
+        function removeImage(e) {
+          e.childNodes[3].remove()
+        }
+      </script>
+<%- include("../partials/footer.ejs") %>

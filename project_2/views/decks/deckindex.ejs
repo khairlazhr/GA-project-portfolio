@@ -1,0 +1,217 @@
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0">All Decks</h4>
+                        <div>
+                            <a class="btn btn-sm btn-primary" href="/decks/mydecks">My Deck</a>
+                            <a class="btn btn-sm btn-success" href="/decks/new">New Deck</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 ">
+            <div class="col-12 mx-2 my-3">
+                <form class="form d-inline-flex" id="deck-search" action="/decks" method="GET">
+                  <div class="form-check mx-2">
+                    <input onchange="filterCheck()" class="form-check-input" type="radio" name="flexRadioDefault" value="general" id="general" checked>
+                    <label class="form-check-label" for="general">General</label>
+                  </div>
+                    <div class="form-check mx-2">
+                        <input onchange="filterCheck()" class="form-check-input" type="radio" name="flexRadioDefault" id="rule-filter">
+                        <label class="form-check-label" for="rule-filter">
+                          Filter By Rule
+                        </label>
+                    </div>
+                    <div class="form-check mx-2">
+                        <input onchange="filterCheck()" class="form-check-input" type="radio" name="flexRadioDefault" id="npc-filter">
+                        <label class="form-check-label" for="npc-filter">
+                          Filter By NPCs
+                        </label>
+                    </div>
+                    <select class="form-control form-control-sm mx-2 d-none" name="rule" id="rule">
+                        <option value="">Filter by Rule</option>
+                        <option value="all-open">All Open</option>
+                        <option value="ascension">Ascension</option>
+                        <option value="chaos">Chaos</option>
+                        <option value="descension">Descension</option>
+                        <option value="fallen-ace">Fallen Ace</option>
+                        <option value="order">Order</option>
+                        <option value="plus">Plus</option>
+                        <option value="random">Random</option>
+                        <option value="reverse">Reverse</option>
+                        <option value="roulette">Roulette</option>
+                        <option value="same">Same</option>
+                        <option value="sudden-death">Sudden Death</option>
+                        <option value="swap">Swap</option>
+                        <option value="three-open">Three Open</option>
+                    </select>
+                    <select class="form-control form-control-sm mx-2 d-none" name="npc" id="npc">
+                        <option value="">Filter by NPC</option>
+                        <option value="baderon">Baderon</option>
+                        <option value="mordyn">Mordyn</option>
+                        <option value="o'kalkaya">O'kalkaya</option>
+                        <option value="r'ashaht-rhiki">R'ashaht Rhiki</option>
+                        <option value="wawalgo">Wawalago</option>
+                        <option value="mimidoa">Mimidoa</option>
+                        <option value="trachtoum">Trachtoum</option>
+                        <option value="gegeruju">Gegeruju</option>
+                        <option value="memeroom">Memeroon</option>
+                        <option value="momodi">Momodi</option>
+                        <option value="swift">Swift</option>
+                        <option value="wymond">Wymond</option>
+                        <option value="yayake">Yayake</option>
+                        <option value="droyn">Droyn</option>
+                        <option value="yellow-moon">Yellow Moon</option>
+                        <option value="fufulupa">Fufulupa</option>
+                        <option value="f'hobhas">F'hobhas</option>
+                        <option value="roger">Roger</option>
+                        <option value="helmhart">Helmhart</option>
+                        <option value="hab">Hab</option>
+                        <option value="maisenta">Maisenta</option>
+                        <option value="mother-miounne">Mother Miounne</option>
+                        <option value="vorsaile-heuloix">Vorsaile Heuloix</option>
+                        <option value="noes">Noes</option></optgroup>
+                        <option value="marcette">Marcette</option>
+                        <option value="piralnaut">Piralnaut</option>
+                        <option value="buscarron">Buscarron</option>
+                        <option value="landenel">Landenel</option>
+                        <option value="sezul-totoloc">Sezul Totoloc</option>
+                        <option value="joellaut">Joellaut</option>
+                        <option value="ourdilic">Ourdilic</option>
+                        <option value="indolent-imperial">Indolent Imperial</option>
+                        <option value="klynthota">Klynthota</option>
+                        <option value="rowena">Rowena</option>
+                        <option value="aurifort">Aurifort of the Three Clubs</option>
+                        <option value="guhtwint">Guhtwint of the Three Diamonds</option>
+                        <option value="jonas">Jonas of the Three Spades</option>
+                        <option value="king-elmer">King Elmer III</option>
+                        <option value="lewena">Lewena</option>
+                        <option value="ruthwyda">Ruhtwyda of the Three Hearts</option>
+                        <option value="triple-triad-master">Triple Triad Master</option>
+                        <option value="flichoirel">Flichoirel the Lordling</option>
+                        <option value="hall-overseer">Hall Overseer</option>
+                        <option value="nell">Nell Half-full</option>
+                        <option value="prideful-stag">Prideful Stag</option>
+                        <option value="wyra">Wyra “Greenhands” Lyehga</option>
+                        <option value="marcechamp">Marcechamp</option>
+                        <option value="vath-deftarm">Vath Deftarm</option>
+                        <option value="voracious-vath">Voracious Vath</option>
+                        <option value="mero-roggo">Mero Roggo</option>
+                        <option value="tapklix">Tapklix</option>
+                        <option value="mogzin">Master Mogzin</option>
+                        <option value="mogmil">Mogmill</option>
+                        <option value="midnight-dew">Midnight Dew</option>
+                        <option value="redbill-storeboy">Redbill Storeboy</option>
+                        <option value="seika">Seika</option>
+                        <option value="laniaitte">Laniaitte</option>
+                        <option value="linu-vali">Linu Vali</option>
+                        <option value="marielle">Marielle</option>
+                        <option value="idle-imperial">Idle Imperial</option>
+                        <option value="dominiac">Dominiac</option>
+                        <option value="gibrillont">Gibrillont</option>
+                        <option value="elaisse">Elaisse</option>
+                        <option value="house-fortemps-manservant">House Fortemps Manservant</option>
+                        <option value="ercanbald">Ercanbald</option>
+                        <option value="ironworks-hand">Ironworks Hand</option>
+                        <option value="botan">Botan</option>
+                        <option value="hanagasa">Hanagasa</option>
+                        <option value="hetsukaze">Hetsukaze</option>
+                        <option value="hokushin">Hokushin</option>
+                        <option value="kikimo">Kikimo</option>
+                        <option value="kotokaze">Kotokaze</option>
+                        <option value="garima">Garima</option>
+                        <option value="imperial-deserter">Imperial Deserter</option>
+                        <option value="umber-torrent">Umber Torrent</option>
+                        <option value="isobe">Isobe</option>
+                        <option value="kaizan">Kaizan</option>
+                        <option value="tsuzura">Tsuzura</option>
+                        <option value="ushiogi">Ushiogi</option>
+                        <option value="yusui">Yusui</option>
+                        <option value="gyoei">Gyoei</option>
+                        <option value="hachinan">Hachinan</option>
+                        <option value="masatsuchi">Masatsuchi</option>
+                        <option value="munglig">Munglig</option>
+                        <option value="nigen">Nigen</option>
+                        <option value="ogodei">Ogodei</option>
+                        <option value="kiuka">Kiuka</option>
+                        <option value="glynard">Glynard</option>
+                        <option value="grewenn">Grewenn</option>
+                        <option value="cobleva">Cobleva</option>
+                        <option value="lamlyn">Lamlyn</option>
+                        <option value="ibenart">Ibenart</option>
+                        <option value="drery">Drery</option>
+                        <option value="lewto-sue">Lewto-Sue</option>
+                        <option value="eo-sigun">Eo Sigun</option>
+                        <option value="gyuf-uin">Gyuf Uin</option>
+                        <option value="hargra">Hargra</option>
+                        <option value="redard">Redard</option>
+                        <option value="saushs-koal">Saushs Koal</option>
+                        <option value="arsieu">Arsieu</option>
+                        <option value="sladkey">Sladkey</option>
+                        <option value="former-imperial">Furtive Former Imperial</option>
+                    </select>
+                    <input type="submit" value="Search" class="btn btn-secondary btn-sm">
+                </form>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="table-head d-flex">
+                <div class="col-1 d-flex justify-content-center">
+                  <h5>Usage</h5>
+                </div>
+                <div class="col-5 d-flex justify-content-center">
+                  <h5>Cards</h5>
+                </div>
+                <div class="col-2">
+                  <h5>Upvotes</h5>
+                </div>
+                <div class="col-1">
+                  <h5>Created by:</h5>
+                </div>
+              </div>      
+        </div>
+        <% for (const item of decks) { %>
+        <div class="row mt-3">
+          <div class="d-flex">
+              <div class="col-1 d-flex justify-content-center">
+                <p><%= item.usage %></p>
+              </div>
+              <div class="col-5 d-flex justify-content-center">
+                <a href="/cards/<%= item.cards.card1id %>"><img class="mx-2" src="<%= cards[item.cards.card1id-1].icon %>"></a>
+                <a href="/cards/<%= item.cards.card2id %>"><img class="mx-2" src="<%= cards[item.cards.card2id-1].icon %>"></a>
+                <a href="/cards/<%= item.cards.card3id %>"><img class="mx-2" src="<%= cards[item.cards.card3id-1].icon %>"></a>
+                <a href="/cards/<%= item.cards.card4id %>"><img class="mx-2" src="<%= cards[item.cards.card4id-1].icon %>"></a>
+                <a href="/cards/<%= item.cards.card5id %>"><img class="mx-2" src="<%= cards[item.cards.card5id-1].icon %>"></a>
+              </div>
+              <div class="col-2">
+                <h5><%= item.upvotes %></h5>
+              </div>
+              <div class="col-1">
+                <h5><%= item.user %></h5>
+              </div>
+              <div class="col-1 d-flex justify-content-center">
+                <a href="/decks/<%= item.id %>"><button type="button" class="btn btn-success">Open</button></a>
+              </div>
+            </div>      
+        </div>
+        <% } %>
+        <script>
+          function filterCheck() {
+            if (document.querySelector('#rule-filter').checked)  {
+              document.querySelector("#rule").classList.remove('d-none')
+              document.querySelector("#npc").classList.add("d-none")
+            } else if (document.querySelector('#npc-filter').checked){
+              document.querySelector("#rule").classList.add("d-none")
+              document.querySelector("#npc").classList.remove("d-none")
+            } else if (document.querySelector("#general").checked) {
+              document.querySelector("#rule").classList.add("d-none")
+              document.querySelector("#npc").classList.add("d-none")
+            }
+          }
+        </script>
+    </div>
+<%- include("../partials/footer.ejs") %>

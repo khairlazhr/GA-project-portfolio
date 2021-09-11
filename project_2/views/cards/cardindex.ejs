@@ -1,74 +1,142 @@
 <%- include("../partials/header.ejs") %>
   <div class="container">
-    <div class="d-none d-md-block">
-      <form 
-        class="form form-inline d-flex justify-content-center" 
-        id="card_search" 
-        action="/cards/search"
-        method="GET"
-      >
-        <input 
-          placeholder="Name" 
-          class="form-control form-control-sm" 
-          type="search" 
-          name="name" 
-          id="name"
+    <div class="row my-3 justify-content-center">
+      <div class="col-8 ">
+        <form 
+          class="form form-inline d-flex justify-content-center" 
+          id="card_search" 
+          action="/cards"
+          method="GET"
         >
-        <input 
-          placeholder="Number" 
-          class="form-control form-control-sm" 
-          type="search" 
-          name="number" 
-          id="number"
-        >
-        <select class="form-control form-control-sm" name="type" id="type">
-          <option value="">All Types</option>
-          <option value="0">Normal</option>
-          <option value="1">Primal</option>
-          <option value="2">Scion</option>
-          <option value="3">Beastman</option>
-          <option value="4">Garlean</option>
-        </select>
-        <select class="form-control form-control-sm" name="stars" id="stars">
-          <option value="">All Rarities</option>
-          <option value="5">5-star</option>
-          <option value="4">4-star</option>
-          <option value="3">3-star</option>
-          <option value="2">2-star</option>
-          <option value="1">1-star</option>
-        </select>
-        <input 
-          type="submit" 
-          value="Search" 
-          class="btn btn-secondary"
-        >
-      </form>
+          <input 
+            placeholder="Name" 
+            class="form-control form-control-sm" 
+            type="search" 
+            name="name" 
+            id="name"
+          >
+          <input 
+            placeholder="Number" 
+            class="form-control form-control-sm" 
+            type="search" 
+            name="number" 
+            id="number"
+          >
+          <select class="form-control form-control-sm" name="type" id="type">
+            <option value="">All Types</option>
+            <option value="0">Normal</option>
+            <option value="1">Primal</option>
+            <option value="2">Scion</option>
+            <option value="3">Beastman</option>
+            <option value="4">Garlean</option>
+          </select>
+          <select class="form-control form-control-sm" name="stars" id="stars">
+            <option value="">All Rarities</option>
+            <option value="5">5★</option>
+            <option value="4">4★</span></option>
+            <option value="3">3★</option>
+            <option value="2">2★</option>
+            <option value="1">1★</option>
+          </select>
+          <select class="form-control form-control-sm" name="source" id="source">
+            <option value="">All Sources</option>
+            <option value="npcs">NPCs</option>
+            <option value="packs">Packs</option>
+            <option value="drops">Drops</option>
+            <option value="purchase">MGP</option>
+          </select>
+          <input 
+            type="submit" 
+            value="Search" 
+            class="btn btn-secondary"
+          >
+        </form>
+      </div>
     </div>
-    <div>
-      <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Icon</th>
-              <th scope="col">Name</th>
-              <th scope="col">Rarity</th>
-              <th scope="col">Type</th>
-              <th scope="col">Acquisition</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for (const item of card) { %>
-              <tr>
-                <th scope="row"><%= item.id %></th>
-                <td><img src="<%= item.icon %>"></td>
-                <td><%= item.name %></td>
-                <td><%= item.stars %></td>
-                <td><%= item["type"].name %></td>
-              </tr>
+    <div class="row">
+      <div class="table-head d-flex">
+        <div class="col-1">
+          <h5>#</h5>
+        </div>
+        <div class="col-1">
+          <h5>Icon</h5>
+        </div>
+        <div class="col-2">
+          <h5>Name</h5>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+          <h5>Rarity</h5>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+          <h5>Type</h5>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+          <h5>Stats</h5>
+        </div>
+        <div class="col-5 d-flex">
+          <h5>Acquisition</h5>
+        </div>
+      </div>
+    </div>
+    <% for (const item of card) { %>
+    <div class="row">
+      <div class="table-row d-flex align-items-center">
+        <div class="col-1">
+          <a href="/cards/<%= item.id %>" class="table-link">
+            <p><%= item.id %></p>
+          </a>
+        </div>
+        <div class="col-1">
+          <a href="/cards/<%= item.id %>"><img src="<%= item.icon %>"></a>
+        </div>
+        <div class="col-2 px-1">
+          <a href="/cards/<%= item.id %>" class="table-link">
+            <p><%= item.name %></p>
+          </a>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+          <p><%= item.stars %><i class="fa fa-star"></i></p>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+          <% if (item['type'].image) { %>
+            <img class="beast-icon" src="<%= item['type'].image %>">
+          <% } %>
+        </div>
+        <div class="col-1 d-flex flex-column stats p-2">
+          <div class="d-flex justify-content-center">
+            <span><%= item.stats.numeric.top %></span>
+          </div>
+          <div class="d-flex justify-content-around">
+            <span><%= item.stats.numeric.left %></span>
+            <span><%= item.stats.numeric.right %></span>
+          </div>
+          <div class="d-flex justify-content-center">
+            <span><%= item.stats.numeric.bottom %></span>
+          </div>
+        </div>
+        <div class="col-5 px-2">
+          <% if (item.sources.npcs.length > 0) { %>
+            <% for (const npc of item.sources.npcs) { %>
+              <p><%= npc.name %> - <%= npc.location.name %>(<%= npc.location.x %>, <%= npc.location.y %>)</p>
             <% } %>
-          </tbody>
-        </table>
-    </div>
+          <% } %>
+          <% if (item.sources.packs.length > 0) { %>
+            <% for (const pack of item.sources.packs) { %>
+              <p><%= pack.name %></p>
+            <% } %>
+          <% } %>
+          <% if (item.sources.drops.length > 0) { %>
+            <% for (const drop of item.sources.drops) { %>
+              <p><%= drop %></p>
+            <% } %>
+          <% } %>
+          <% if (item.sources.purchase !== null) { %>
+            <p>Purchasable at the Gold Saucer for <%= item.sources.purchase %> MGP</p>
+          <% } %>
+        </div>
+      </div>
+    </div>   
+    <% } %>        
   </div>
       
 <%- include("../partials/footer.ejs") %>

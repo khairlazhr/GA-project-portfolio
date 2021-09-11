@@ -1,0 +1,54 @@
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <div class="row mt-3 justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0">Deck Details</h4>
+                        <a href="/decks/<%= deck.id %>/edit"><button type="button" class="btn btn-success">Edit</button></a>
+                    </div>
+                    <div class="col-6 card-body d-inline-flex justify-content-between">
+                        <div>
+                            <h5>Usage</h5>
+                            <p><%= deck.usage %></p>
+                        </div>
+                        <div>
+                            <h5>Upvotes</h5>
+                            <p><%= deck.upvotes %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0">Cards</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <a href="/cards/<%= deck.cards.card1id %>"><img class="mx-2" src="<%= cards[deck.cards.card1id-1].image %>"></a>
+                            <a href="/cards/<%= deck.cards.card2id %>"><img class="mx-2" src="<%= cards[deck.cards.card2id-1].image %>"></a>
+                            <a href="/cards/<%= deck.cards.card3id %>"><img class="mx-2" src="<%= cards[deck.cards.card3id-1].image %>"></a>
+                            <a href="/cards/<%= deck.cards.card4id %>"><img class="mx-2" src="<%= cards[deck.cards.card4id-1].image %>"></a>
+                            <a href="/cards/<%= deck.cards.card5id %>"><img class="mx-2" src="<%= cards[deck.cards.card5id-1].image %>"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 justify-content-center">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center n">
+                        <h4 class="mb-0">Notes</h4>
+                    </div>
+                    <div class="card-body h-100">
+                        <p><%= deck.notes %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include("../partials/footer.ejs") %>

@@ -1,0 +1,71 @@
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <div class="row border-bottom">
+            <div class="col-12 d-flex justify-content-center my-4">
+                <img class="rounded" src="<%= card.image %>">
+            </div>
+            <div class="col-12 d-flex justify-content-center ">
+                <h2><%= card.name %></h2>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-8 d-flex justify-content-center mb-3">
+                <p>"<%= card.description %>"</p>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-8 d-inline-flex justify-content-evenly">
+                <div class="col-1 d-flex flex-column p-2">
+                    <div class="d-flex">
+                        <h5 class="card-title">Rarity</h5>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="d-flex justify-content-center">
+                      <span><%= card.stars %><i class="fa fa-star"></i></span>
+                    </div>
+                </div>
+                <div class="col-1 d-flex flex-column p-2">
+                    <div class="d-flex">
+                        <h5 class="card-title">Stats</h5>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <span><%= card.stats.numeric.top %></span>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                      <span><%= card.stats.numeric.left %></span>
+                      <span><%= card.stats.numeric.right %></span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <span><%= card.stats.numeric.bottom %></span>
+                    </div>
+                </div>
+                <div class="col-3 d-flex flex-column p-2">
+                    <div class="d-flex">
+                        <h5 class="card-title">Source</h5>
+                    </div>
+                    <div>
+                        <% if (card.sources.npcs.length > 0) { %>
+                          <% for (const npc of card.sources.npcs) { %>
+                            <p><%= npc.name %> - <%= npc.location.name %>(<%= npc.location.x %>, <%= npc.location.y %>)</p>
+                          <% } %>
+                        <% } %>
+                        <% if (card.sources.packs.length > 0) { %>
+                          <% for (const pack of card.sources.packs) { %>
+                            <p><%= pack.name %></p>
+                          <% } %>
+                        <% } %>
+                        <% if (card.sources.drops.length > 0) { %>
+                          <% for (const drop of card.sources.drops) { %>
+                            <p><%= drop %></p>
+                          <% } %>
+                        <% } %>
+                        <% if (card.sources.purchase !== null) { %>
+                          <p>Purchasable at the Gold Saucer for <%= card.sources.purchase %> MGP</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+<%- include("../partials/footer.ejs") %>

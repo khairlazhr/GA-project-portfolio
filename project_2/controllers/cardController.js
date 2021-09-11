@@ -3,22 +3,25 @@ const controller = express.Router()
 const cardModel = require("../models/cards")
 
 controller.get("/", async (req,res) => {
-    let cardList = await cardModel.find().sort( { id: 1 } ).exec()
+    let query = {};
+    let { name, number, type, stars, source } = req.query
+    if ((name) && (name !== "")) query.name = { $regex: name, $options: "i" };
+    if ((number) && (number !== "")) query.id = Number(number);
+    if ((type) && (type !== "")) query["type.id"] = Number(type);
+    if ((stars) && (stars !== "")) query.stars = Number(stars);
+    if ((source) && (source === "purchase")) {
+        query[`sources.${source}`] = { $exists: true, $ne: null };
+    } else if ((source) && (source !== "")) query[`sources.${source}`] = { $exists: true, $ne: [] };
+    let cardList = await cardModel.find(query).sort( { id: 1 } ).exec()
     res.render("cards/cardindex.ejs", {
         card: cardList
     })
 })
 
-controller.get("/search", async (req,res) => {
-    let query = {};
-    if (req.query.name !== "") query.name = { $regex: req.query.name, $options: "i" };
-    if (req.query.number !== "") query.id = Number(req.query.number);
-    if (req.query.type !== "") query["type.id"] = Number(req.query.type);
-    if (req.query.stars !== "") query.stars = Number(req.query.stars);
-
-    let cardList = await cardModel.find(query).sort( { id: 1 } ).exec()
-    res.render("cards/cardindex.ejs", {
-        card: cardList
+controller.get("/:id", async (req,res) => {
+    const selectedCard = await cardModel.findOne( { id: req.params.id } )
+    res.render("cards/cardshow.ejs", {
+        card: selectedCard
     })
 })
 
