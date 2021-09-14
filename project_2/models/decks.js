@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const cardModel = require("./cards")
 
 const deckSchema = new Schema(
     {
@@ -9,50 +8,15 @@ const deckSchema = new Schema(
         user: { type: String, required: true },
         upvotes: Number,
         cards: {
-            card1id: { type: Number, required: true },
-            card2id: { type: Number, required: true },
-            card3id: { type: Number, required: true },
-            card4id: { type: Number, required: true },
-            card5id: { type: Number, required: true },
+            card1id: {type: Schema.Types.ObjectId, ref: 'Card'},
+            card2id: {type: Schema.Types.ObjectId, ref: 'Card'},
+            card3id: {type: Schema.Types.ObjectId, ref: 'Card'},
+            card4id: {type: Schema.Types.ObjectId, ref: 'Card'},
+            card5id: {type: Schema.Types.ObjectId, ref: 'Card'},
         },
         notes: String,
     }
 );
-
-// deckSchema.virtual('cardLinks', {
-//     ref: 'Card',
-//     localfield: "cards.card1id",
-//     foreignfield: "id",
-//     justOne: true,
-// })
-
-// deckSchema.virtual('cardLinks2', {
-//     ref: 'Card',
-//     localfield: "cards.card2id",
-//     foreignfield: "id",
-//     justOne: true,
-// })
-
-// deckSchema.virtual('cardLinks3', {
-//     ref: 'Card',
-//     localfield: "cards.card3id",
-//     foreignfield: "id",
-//     justOne: true,
-// })
-
-// deckSchema.virtual('cardLinks4', {
-//     ref: 'Card',
-//     localfield: "cards.card4id",
-//     foreignfield: "id",
-//     justOne: true,
-// })
-
-// deckSchema.virtual('cardLinks5', {
-//     ref: 'Card',
-//     localfield: "cards.card5id",
-//     foreignfield: "id",
-//     justOne: true,
-// })
 
 const Deck = mongoose.model("Deck", deckSchema);
 

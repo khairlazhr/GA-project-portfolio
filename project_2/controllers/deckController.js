@@ -3,27 +3,65 @@ const controller = express.Router()
 const deckModel = require("../models/decks")
 const cardModel = require("../models/cards")
 
-controller.get("/", async (req,res) => {
+function isAuthenticated() {
+    return (req, res, next) => {
+        if (req.session.username) {
+            next()
+          } else {
+            res.status(403);
+            res.send("You need to be logged in!");
+          }
+      }
+};
+    
+
+controller.get("/", isAuthenticated(), async (req,res) => {
     let query = {};
     let { npc, rule } = req.query;
     if ((npc) && (npc !== "")) query.usage = npc;
     if ((rule) && (rule !== "")) query.usage = rule;
-    const deckIndex = await deckModel.find(query).sort( { id: 1 } ).exec();
-    const cardIndex = await cardModel.find().sort( { id: 1 } ).exec()
+    const deckIndex = await deckModel.find(query)
+                                        .populate("cards.card1id")
+                                        .populate("cards.card2id")
+                                        .populate("cards.card3id")
+                                        .populate("cards.card4id")
+                                        .populate("cards.card5id")
+                                        .sort( { id: 1 } )
+                                        .exec();
+    res.render("decks/mydecksindex.ejs", {
+        decks: deckIndex,
+        currentUser: req.session.username
+    })
+})
+
+controller.get("/mydecks",  async (req,res) => {
+    let query = { user: currentUser };
+    let { npc, rule } = req.query;
+    if ((npc) && (npc !== "")) query.usage = npc;
+    if ((rule) && (rule !== "")) query.usage = rule;
+    const deckIndex = await deckModel.find(query)
+                                        .populate("cards.card1id")
+                                        .populate("cards.card2id")
+                                        .populate("cards.card3id")
+                                        .populate("cards.card4id")
+                                        .populate("cards.card5id")
+                                        .sort( { id: 1 } )
+                                        .exec();
     res.render("decks/deckindex.ejs", {
         decks: deckIndex,
-        cards: cardIndex
+        currentUser: req.session.username
     })
 })
 
-controller.get("/new", async (req,res) => {
-    cardDetails = await cardModel.find().sort( { id: 1 } ).exec()
+controller.get("/new", isAuthenticated() ,async (req,res) => {
+    const cardList = await cardModel.find().sort( { id: 1 } ).exec()
     res.render("decks/decknew.ejs", {
-        cards: cardDetails
+        cards: cardList,
+        currentUser: req.session.username,
     })
 })
 
-controller.post("/", async (req,res) => {
+controller.post("/", isAuthenticated(), async (req,res) => {
     let currentPostId = await deckModel.countDocuments();
     let newPostId = currentPostId+1;
     let use = ""
@@ -37,7 +75,7 @@ controller.post("/", async (req,res) => {
     const inputs = {
         id: newPostId,
         usage: use,
-        user: "testUser",
+        user: req.body.user,
         cards: {
             card1id: req.body.card1id,
             card2id: req.body.card2id,
@@ -53,23 +91,36 @@ controller.post("/", async (req,res) => {
 
 controller.get("/:id", async (req,res) => {
     const deckShow = await deckModel.findOne( { id: req.params.id } )
-    const cardIndex = await cardModel.find().sort( { id: 1 } ).exec()
+                                    .populate("cards.card1id")
+                                    .populate("cards.card2id")
+                                    .populate("cards.card3id")
+                                    .populate("cards.card4id")
+                                    .populate("cards.card5id")
+                                    .exec();
+
     res.render("decks/deckshow.ejs", {
         deck: deckShow,
-        cards: cardIndex
+        currentUser: req.session.username
     })
 })
 
-controller.get("/:id/edit", async (req, res) => {
+controller.get("/:id/edit", isAuthenticated(), async (req, res) => {
     const deckShow = await deckModel.findOne( { id: req.params.id } )
-    const cardIndex = await cardModel.find().sort( { id: 1 } ).exec()
+                                    .populate("cards.card1id")
+                                    .populate("cards.card2id")
+                                    .populate("cards.card3id")
+                                    .populate("cards.card4id")
+                                    .populate("cards.card5id")
+                                    .exec();
+    const cardList = await cardModel.find(query).sort( { id: 1 } ).exec()
     res.render('decks/deckedit.ejs', {
       deck: deckShow,
-      cards: cardIndex
+      cards: cardList,
+      currentUser: req.session.username
     });
   });
   
-controller.put("/:id", async (req, res) => {
+controller.put("/:id", isAuthenticated(), async (req, res) => {
     let use = ""
     if (req.body.rule !== "") {
         use = req.body.rule
@@ -78,10 +129,9 @@ controller.put("/:id", async (req, res) => {
     } else {
         use = req.body.flexRadioDefault
     }
-    console.log(req.body)
     const inputs = {
         usage: use,
-        user: "testUser",
+        user: req.body.username,
         cards: {
             card1id: req.body.card1id,
             card2id: req.body.card2id,
@@ -96,9 +146,8 @@ controller.put("/:id", async (req, res) => {
     res.redirect(`/decks/${req.params.id}`);
 });
 
-controller.delete("/:id", async (req, res) => {
+controller.delete("/:id", isAuthenticated(), async (req, res) => {
     await deckModel.deleteOne( { id: req.params.id } );
-  
     res.redirect("/decks");
   })
 

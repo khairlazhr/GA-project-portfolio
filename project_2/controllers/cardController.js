@@ -14,14 +14,21 @@ controller.get("/", async (req,res) => {
     } else if ((source) && (source !== "")) query[`sources.${source}`] = { $exists: true, $ne: [] };
     let cardList = await cardModel.find(query).sort( { id: 1 } ).exec()
     res.render("cards/cardindex.ejs", {
-        card: cardList
+        card: cardList,
+        currentUser: req.session.username,
+        name: name,
+        number: number,
+        type: type,
+        stars: stars,
+        source: source
     })
 })
 
 controller.get("/:id", async (req,res) => {
     const selectedCard = await cardModel.findOne( { id: req.params.id } )
     res.render("cards/cardshow.ejs", {
-        card: selectedCard
+        card: selectedCard,
+        currentUser: req.session.username
     })
 })
 

@@ -4,8 +4,8 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 
-const Card = require("./models/cards");
-const cardSeed = require("./models/seed");
+// const Card = require("./models/cards");
+// const cardSeed = require("./models/seed");
 
 // Controller routes
 const homepageController = require("./controllers/homepageController");
@@ -43,14 +43,16 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true }))
 app.use(methodOverride("_method"))
+app.use(cookieParser());
+app.use(express.json());
 
 const oneSession = 1000 * 60 * 15
 
 app.use(session({
     secret: "Fm4faAmsd5fZnf1k6dDSfi7sa89ptD",
-    saveUnintialized: false,
-    cookie: { maxAge: oneSession},
     resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: oneSession},
 }))
 
 app.use(homepageController);
@@ -60,3 +62,4 @@ app.use("/decks", deckController);
 
 
 app.listen(3000);
+

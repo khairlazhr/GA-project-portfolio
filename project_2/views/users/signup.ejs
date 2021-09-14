@@ -1,25 +1,38 @@
-<%- include("partials/header.ejs") %>
-    <div class="signup-form">
-        <form action="/users/signup" method="POST">
-            <h2>Sign Up</h2>
-            <p>Please fill in this form to create an account!</p>
-            <hr>
-            <div class="form-group">
-                <div class="col"><input type="text" class="form-control" name="username" placeholder="Username" required></div>   	
+<%- include("../partials/header.ejs") %>
+    <div class="container">
+        <div class="row mt-3 justify-content-center">
+            <div class="signup-form col-4">
+                <form action="/users/signup" method="POST">
+                    <div class="card">
+                        <div class="card-header d-flex flex-column align-items-center">
+                            <h2>Sign Up</h2>
+                            <p>Please fill in this form to create an account!</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group mb-2">
+                                <label for="username" class="form-label">Username:</label>
+                                <input type="text" class="form-control" name="username" required> 	
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" name="email"  required>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" class="form-control col-sm-4" name="password"  required>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="confirmpw" class="form-label">Confirm Password:</label>
+                                <input type="password" class="form-control" name="confirmpw" required>
+                            </div>        
+                            <div class="form-group text-end ">
+                                <button type="submit" class="btn btn-primary btn-md">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="hint-text">Already have an account? <a href="/users/login">Login here</a></div>
             </div>
-            <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
-            </div>        
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
-            </div>
-        </form>
-        <div class="hint-text">Already have an account? <a href="/login">Login here</a></div>
+        </div>
     </div>
-<%- include("partials/footer.ejs") %>
+<%- include("../partials/footer.ejs") %>

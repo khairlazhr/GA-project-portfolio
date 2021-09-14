@@ -4,10 +4,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0">All Decks</h4>
+                        <h4 class="mb-0">My Decks</h4>
                         <% if(currentUser) { %>
                         <div>
-                            <a class="btn btn-sm btn-primary" href="/decks/mydecks">My Deck</a>
+                            <a class="btn btn-sm btn-primary" href="/decks/">All Decks</a>
                             <a class="btn btn-sm btn-success" href="/decks/new">New Deck</a>
                         </div>
                         <% } %>
@@ -199,7 +199,7 @@
                 <h5><%= item.user %></h5>
               </div>
               <div class="col-1 d-flex justify-content-center mx-2">
-                <a href="/decks/<%= item.id %>"><button type="button" class="btn btn-success"><i></i>></button></a>
+                <a href="/decks/<%= item.id %>"><button type="button" class="btn btn-success">></button></a>
               </div>
             </div>      
         </div>

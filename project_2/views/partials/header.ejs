@@ -21,10 +21,18 @@
             <li><a href="/cards" class="nav-link px-2 text-white">Cards</a></li>
             <li><a href="/decks" class="nav-link px-2 text-white">Decks</a></li>
           </ul>
-          <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">Login</button>
-            <button type="button" class="btn btn-warning">Sign-up</button>
-          </div>
+          <% if(currentUser) { %>
+            <div class="d-flex align-items-center">
+              <h6 class="mx-2">Welcome, <%= currentUser %></h6>
+              <a href="/users/logout"><button type="button" class="btn btn-warning btn-sm">Logout</button></a>
+            </div>
+          <% } %>
+          <% if (!currentUser) { %>
+            <div class="text-end">
+              <a href="/users/login"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+              <a href="/users/signup"><button type="button" class="btn btn-warning">Sign-up</button></a>
+            </div>
+          <% } %>
         </div>
       </div>
     </header>
