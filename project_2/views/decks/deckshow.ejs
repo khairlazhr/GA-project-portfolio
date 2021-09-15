@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h4 class="mb-0">Deck Details</h4>
-                        <% if(currentUser) { %>
+                        <% if (currentUser) { %>
                         <a href="/decks/<%= deck.id %>/edit"><button type="button" class="btn btn-success">Edit</button></a>
                         <% } %>
                     </div>
@@ -30,11 +30,11 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-center">
-                            <a href="/cards/<%= deck.cards.card1id %>"><img class="mx-2" src="<%= cards[deck.cards.card1id-1].image %>"></a>
-                            <a href="/cards/<%= deck.cards.card2id %>"><img class="mx-2" src="<%= cards[deck.cards.card2id-1].image %>"></a>
-                            <a href="/cards/<%= deck.cards.card3id %>"><img class="mx-2" src="<%= cards[deck.cards.card3id-1].image %>"></a>
-                            <a href="/cards/<%= deck.cards.card4id %>"><img class="mx-2" src="<%= cards[deck.cards.card4id-1].image %>"></a>
-                            <a href="/cards/<%= deck.cards.card5id %>"><img class="mx-2" src="<%= cards[deck.cards.card5id-1].image %>"></a>
+                            <a href="/cards/<%= deck.cards.card1id.id %>"><img class="mx-2" src="<%= deck.cards.card1id.image %>"></a>
+                            <a href="/cards/<%= deck.cards.card2id.id %>"><img class="mx-2" src="<%= deck.cards.card2id.image %>"></a>
+                            <a href="/cards/<%= deck.cards.card3id.id %>"><img class="mx-2" src="<%= deck.cards.card3id.image %>"></a>
+                            <a href="/cards/<%= deck.cards.card4id.id %>"><img class="mx-2" src="<%= deck.cards.card4id.image %>"></a>
+                            <a href="/cards/<%= deck.cards.card5id.id %>"><img class="mx-2" src="<%= deck.cards.card5id.image %>"></a>
                         </div>
                     </div>
                 </div>

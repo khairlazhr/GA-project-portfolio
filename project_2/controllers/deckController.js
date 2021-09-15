@@ -8,7 +8,7 @@ function isAuthenticated() {
         if (req.session.username) {
             next()
           } else {
-            res.redirect("/login");
+            res.redirect("/users/login");
           }
       }
 };
@@ -33,7 +33,8 @@ controller.get("/", async (req,res) => {
     })
 })
 
-controller.get("/mydecks",  async (req,res) => {
+controller.get("/mydecks", isAuthenticated() , async (req,res) => {
+    const currentUser = req.session.username
     let query = { user: currentUser };
     let { npc, rule } = req.query;
     if ((npc) && (npc !== "")) query.usage = npc;
@@ -48,7 +49,7 @@ controller.get("/mydecks",  async (req,res) => {
                                         .exec();
     res.render("decks/mydecksindex.ejs", {
         decks: deckIndex,
-        currentUser: req.session.username
+        currentUser: req.session.username,
     })
 })
 
@@ -115,7 +116,7 @@ controller.get("/:id/edit", isAuthenticated(), async (req, res) => {
                                     .populate("cards.card4id")
                                     .populate("cards.card5id")
                                     .exec();
-    const cardList = await cardModel.find(query).sort( { id: 1 } ).exec()
+    const cardList = await cardModel.find().sort( { id: 1 } ).exec()
     res.render('decks/deckedit.ejs', {
       deck: deckShow,
       cards: cardList,

@@ -39,7 +39,7 @@ controller.post("/signup", async (req,res) => {
     if (hashedPassword === hashedConfirmPassword) {
       await userModel.create(user)
       req.session.username = user.username;
-      res.redirect("/login")
+      res.redirect("/users/login")
     }
   } catch (err) {
     console.log(err)
