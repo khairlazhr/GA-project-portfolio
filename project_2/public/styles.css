@@ -29,7 +29,11 @@ body {
 }
 
 .table-head {
-    border-bottom: solid 1px black;
+    border-bottom: solid 3px black;
+}
+
+.table-card-row {
+    border-bottom: solid 1px grey;
 }
 
 .beast-icon {

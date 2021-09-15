@@ -34,11 +34,11 @@
           </select>
           <select class="form-select form-select-sm" name="stars" id="stars">
             <option value="">All Rarities</option>
-            <option value="5">5★</option>
-            <option value="4">4★</span></option>
-            <option value="3">3★</option>
-            <option value="2">2★</option>
-            <option value="1">1★</option>
+            <option value="5" id="5-star">5★</option>
+            <option value="4" id="4-star">4★</option>
+            <option value="3" id="3-star">3★</option>
+            <option value="2" id="2-star">2★</option>
+            <option value="1" id="1-star">1★</option>
           </select>
           <select class="form-select form-select-sm" name="source" id="source">
             <option value="">All Sources</option>
@@ -51,6 +51,7 @@
             type="submit" 
             value="Search" 
             class="btn btn-secondary"
+            onclick="saveValue()"
           >
         </form>
       </div>
@@ -82,7 +83,7 @@
     </div>
     <% for (const item of card) { %>
     <div class="row">
-      <div class="table-row d-flex align-items-center">
+      <div class="table-card-row d-flex align-items-center">
         <div class="col-1">
           <a href="/cards/<%= item.id %>" class="table-link">
             <p><%= item.id %></p>
@@ -116,7 +117,7 @@
             <span><%= item.stats.numeric.bottom %></span>
           </div>
         </div>
-        <div class="col-5 px-2">
+        <div class="col-5 p-2 d-flex flex-column justify-content-center">
           <% if (item.sources.npcs.length > 0) { %>
             <% for (const npc of item.sources.npcs) { %>
               <p><%= npc.name %> - <%= npc.location.name %>(<%= npc.location.x %>, <%= npc.location.y %>)</p>
@@ -140,5 +141,6 @@
     </div>   
     <% } %>        
   </div>
+  <script src="/app.js"></script>
       
 <%- include("../partials/footer.ejs") %>

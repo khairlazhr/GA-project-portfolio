@@ -39,7 +39,7 @@ controller.post("/signup", async (req,res) => {
     if (hashedPassword === hashedConfirmPassword) {
       await userModel.create(user)
       req.session.username = user.username;
-      res.redirect("/")
+      res.redirect("/login")
     }
   } catch (err) {
     console.log(err)
@@ -94,7 +94,7 @@ controller.put("/:id", async (req, res) => {
     if (hashedPassword === hashedConfirmPassword) {
       await userModel.updateOne( { username: req.body.username }, { $set: { password: hashedPassword }})
     }
-    res.redirect(`/users/login`)
+    res.redirect(`/users/login?pwchanged=success`)
     }
   } catch (err) {
     console.log(err)

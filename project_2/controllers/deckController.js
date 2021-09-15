@@ -8,14 +8,13 @@ function isAuthenticated() {
         if (req.session.username) {
             next()
           } else {
-            res.status(403);
-            res.send("You need to be logged in!");
+            res.redirect("/login");
           }
       }
 };
     
 
-controller.get("/", isAuthenticated(), async (req,res) => {
+controller.get("/", async (req,res) => {
     let query = {};
     let { npc, rule } = req.query;
     if ((npc) && (npc !== "")) query.usage = npc;
@@ -28,7 +27,7 @@ controller.get("/", isAuthenticated(), async (req,res) => {
                                         .populate("cards.card5id")
                                         .sort( { id: 1 } )
                                         .exec();
-    res.render("decks/mydecksindex.ejs", {
+    res.render("decks/deckindex.ejs", {
         decks: deckIndex,
         currentUser: req.session.username
     })
@@ -47,7 +46,7 @@ controller.get("/mydecks",  async (req,res) => {
                                         .populate("cards.card5id")
                                         .sort( { id: 1 } )
                                         .exec();
-    res.render("decks/deckindex.ejs", {
+    res.render("decks/mydecksindex.ejs", {
         decks: deckIndex,
         currentUser: req.session.username
     })
@@ -62,32 +61,36 @@ controller.get("/new", isAuthenticated() ,async (req,res) => {
 })
 
 controller.post("/", isAuthenticated(), async (req,res) => {
-    let currentPostId = await deckModel.countDocuments();
-    let newPostId = currentPostId+1;
-    let use = ""
-    if (req.body.rule !== "") {
-        use = req.body.rule
-    } else if (req.body.npc !== "") {
-        use = req.body.npc
-    } else {
-        use = req.body.flexRadioDefault
+    try {
+        let currentPostId = await deckModel.countDocuments();
+        let newPostId = currentPostId+1;
+        let use = ""
+        if (req.body.rule !== "") {
+            use = req.body.rule
+        } else if (req.body.npc !== "") {
+            use = req.body.npc
+        } else {
+            use = req.body.flexRadioDefault
+        }
+        const inputs = {
+            id: newPostId,
+            usage: use,
+            user: req.body.user,
+            cards: {
+                card1id: req.body.card1id,
+                card2id: req.body.card2id,
+                card3id: req.body.card3id,
+                card4id: req.body.card4id,
+                card5id: req.body.card5id,
+            },
+            notes: req.body.notes
+        }
+        await deckModel.create(inputs)
+        res.redirect("/decks")
+    } catch {
+        res.redirect("/decks")
     }
-    const inputs = {
-        id: newPostId,
-        usage: use,
-        user: req.body.user,
-        cards: {
-            card1id: req.body.card1id,
-            card2id: req.body.card2id,
-            card3id: req.body.card3id,
-            card4id: req.body.card4id,
-            card5id: req.body.card5id,
-        },
-        notes: req.body.notes
-    }
-    await deckModel.create(inputs)
-    res.redirect("/decks")
-})
+});
 
 controller.get("/:id", async (req,res) => {
     const deckShow = await deckModel.findOne( { id: req.params.id } )
