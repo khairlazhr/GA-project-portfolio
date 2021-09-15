@@ -49,7 +49,7 @@ app.use(express.json());
 const oneSession = 1000 * 60 * 15
 
 app.use(session({
-    secret: "Fm4faAmsd5fZnf1k6dDSfi7sa89ptD",
+    secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: oneSession},
