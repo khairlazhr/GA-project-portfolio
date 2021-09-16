@@ -15,7 +15,6 @@ const userController = require("./controllers/userController")
 
 
 const mongoURI = process.env.MONGODB_URI;
-console.log(mongoURI)
 const dbConnection = mongoose.connection;
 
 mongoose.connect(mongoURI, {
@@ -46,13 +45,10 @@ app.use(express.urlencoded({extended: true }))
 app.use(methodOverride("_method"))
 app.use(express.json());
 
-const oneSession = 1000 * 60 * 15
-
 app.use(session({
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: oneSession},
 }))
 
 app.use(homepageController);
