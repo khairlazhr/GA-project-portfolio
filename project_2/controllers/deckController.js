@@ -117,11 +117,16 @@ controller.get("/:id/edit", isAuthenticated(), async (req, res) => {
                                     .populate("cards.card5id")
                                     .exec();
     const cardList = await cardModel.find().sort( { id: 1 } ).exec()
-    res.render('decks/deckedit.ejs', {
-      deck: deckShow,
-      cards: cardList,
-      currentUser: req.session.username
-    });
+    if (deckShow.user === req.session.username) {
+        res.render('decks/deckedit.ejs', {
+            deck: deckShow,
+            cards: cardList,
+            currentUser: req.session.username
+          });
+    } else {
+        res.redirect(`/decks/${req.params.id}`)
+    }
+    
   });
   
 controller.put("/:id", isAuthenticated(), async (req, res) => {

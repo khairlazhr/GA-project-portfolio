@@ -16,6 +16,8 @@ function isAuthenticated() {
     }
 };
 
+
+
 controller.get("/signup", (req,res) => {
     if (req.session.username){
         res.redirect("/?loggedin=true");
