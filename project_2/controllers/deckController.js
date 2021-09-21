@@ -47,10 +47,13 @@ controller.get("/mydecks", isAuthenticated() , async (req,res) => {
                                         .populate("cards.card5id")
                                         .sort( { id: 1 } )
                                         .exec();
-    res.render("decks/mydecksindex.ejs", {
-        decks: deckIndex,
-        currentUser: req.session.username,
-    })
+    if (deckIndex.user === req.session.username) {
+        res.render("decks/mydecksindex.ejs", {
+            decks: deckIndex,
+            currentUser: req.session.username,
+    })} else {
+        res.redirect("/decks")
+    }
 })
 
 controller.get("/new", isAuthenticated() ,async (req,res) => {
