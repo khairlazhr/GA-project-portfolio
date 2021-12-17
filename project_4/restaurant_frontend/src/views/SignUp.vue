@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import axios from "axios";
+import router from '../router';
 
 const email = ref('')
 const password = ref('')
@@ -29,6 +30,8 @@ function handleSubmit() {
             "postal_code": postalCode.value,
             "unit_no": unitNo.value
         }
+    }).then(response => {
+        router.push({ path: '/'})
     })
 }
 </script>
@@ -80,7 +83,7 @@ function handleSubmit() {
             <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-full px-3">
                 <label class="block text-lg font-bold text-white-700 mb-2" for="deliveryAddress">
-                    Mobile Number
+                    Delivery Address
                 </label>
                 <input 
                 class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="deliveryAddress" type="text" v-model="deliveryAddress" placeholder="Please enter your address.">
@@ -89,10 +92,10 @@ function handleSubmit() {
             <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-full px-3">
                 <label class="block text-lg font-bold text-white-700 mb-2" for="mobileNumber">
-                    Delivery Address
+                    Mobile Number
                 </label>
                 <input 
-                class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="mobileNumber" type="text" v-model="mobileNumber" placeholder="mobileNumber">
+                class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="mobileNumber" type="text" v-model="mobileNumber" placeholder="Mobile Number">
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">

@@ -48,10 +48,9 @@ export default {
     <div class="py-6 md:py-12 h-screen">
         <div class="container py-6 h-full flex flex-row px-4 pb-8 mx-auto mb-8 justify-center">
             <div class="w-2/3 md:px-4 xl:px-6 mt-8 md:mt-0 flex flex-col justify-end">
-                <h1>{{ this.results }}</h1>
             </div>
             <div class="card w-1/3 md:px-4 xl:px-6 mt-8 md:mt-0 text-center rounded">
-                <p class="text-gray-600 mb-3">{{ calculateTotal() }}</p>
+                <!-- <p class="text-gray-600 mb-3">{{ calculateTotal() }}</p> -->
             </div>
         </div>
     </div>
