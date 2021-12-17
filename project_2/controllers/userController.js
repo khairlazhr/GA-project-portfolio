@@ -28,7 +28,8 @@ controller.get("/signup", (req,res) => {
     }
 })
 
-controller.post("/signup", async (req,res) => {
+controller.post("/signup",
+  async (req,res) => {
   try {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt)

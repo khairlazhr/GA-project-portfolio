@@ -69,7 +69,7 @@ controller.post("/", isAuthenticated(), async (req,res) => {
         let currentPostId = await deckModel.countDocuments();
         let newPostId = currentPostId+1;
         let use = ""
-        if (req.body.rule !== "") {
+        if (req.body.rule !== "") { 
             use = req.body.rule
         } else if (req.body.npc !== "") {
             use = req.body.npc
@@ -153,7 +153,7 @@ controller.put("/:id", isAuthenticated(), async (req, res) => {
         },
         notes: req.body.notes
     }
-    await deckModel.updateOne({id: req.params.id,}, inputs);
+    await deckModel.updateOne({id: req.params.id}, inputs);
   
     res.redirect(`/decks/${req.params.id}`);
 });
