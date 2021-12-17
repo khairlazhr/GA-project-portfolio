@@ -1,11 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 import axios from "axios";
+import router from '../router';
 
 const email = ref('')
 const password = ref('')
 
-const isEmailAndPasswordPresent = computed(() => email.value.length > 0 && password.value.length > 0)
+const emit = defineEmits('login')
+
+const isEmailPasswordPresent= computed(() => email.value.length > 0 && password.value.length > 0)
 
 function handleSubmit() {
     axios({
@@ -18,8 +21,14 @@ function handleSubmit() {
     }).then(response => {
         localStorage.setItem("access", response.data["access"]);
         localStorage.setItem("refresh", response.data["refresh"]);
+        emit('login', response.data["first_name"])
+        router.push({ path: '/'})
     })
+    // .catch(error => {
+    //     console.log(error.response.data)
+    // })
 }
+
 </script>
 
 
@@ -46,6 +55,7 @@ function handleSubmit() {
             </div>
             <div class="flex items-center justify-between">
                 <button 
+                :disabled="!isEmailPasswordPresent"
                 class="hover:outline text-white font-bold py-2 px-4 rounded mr-8">
                 Login
                 </button>

@@ -8,17 +8,22 @@
         <div>
           <router-link to="/">Home</router-link> |
           <router-link to="/menu">Menu</router-link> |
-          <router-link to="/bookings">Bookings</router-link>
+          <router-link to="/bookings">Bookings</router-link> |
+          <router-link to="/contact-us">Contact Us</router-link>
         </div>
-        <div>
+        <div v-if="!isLoggedIn">
           <router-link to="/login">Login</router-link> |
           <router-link to="/signup">Sign Up</router-link>
+        </div>
+        <div v-if="isLoggedIn">
+          <span>Welcome, {{ name }}!</span> |
+          <router-link to="/checkout">Checkout</router-link> |
+          <router-link to="/logout">Logout</router-link>
         </div>
       </div>
     </nav>
   </header>
-
-  <router-view/>
+  <router-view @login="login" :isLoggedin="isLoggedIn"/>
   <footer>
     <div class="credit">
       Created by Khairul Azhar | All Rights Reserved
@@ -27,7 +32,15 @@
 </template>
 
 <script setup>
+import { ref } from "vue"
 
+const isLoggedIn = ref(false)
+const name = ref("")
+
+function login(val) {
+  isLoggedIn.value = true,
+  name.value = val.capitalize()
+}
 </script>
 
 <style>

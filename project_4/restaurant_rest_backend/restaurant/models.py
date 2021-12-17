@@ -12,4 +12,4 @@ class MenuItem(models.Model):
     description = models.TextField()
     availability = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
-    image = models.ImageField(null=True, blank=True)
+    imageURL = models.CharField(max_length=200)

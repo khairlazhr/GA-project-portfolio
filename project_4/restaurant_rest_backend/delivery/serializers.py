@@ -2,18 +2,8 @@ from rest_framework import serializers
 from delivery.models import CartItem, Cart
 from restaurant.serializers import MenuItemSerializer
 
-class CartCreateSerializer(serializers.ModelSerializer):
-    total = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Cart
-        fields = [
-            'total'
-        ]
-
-
 class CartItemSerializer(serializers.ModelSerializer):
-    item = MenuItemSerializer(read_only=True)
+    item = MenuItemSerializer()
     class Meta:
         model = CartItem
         fields = [
@@ -23,7 +13,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 
 class CartReadSerializer(serializers.ModelSerializer):
-    cart_items = CartItemSerializer(many=True, read_only=True)
+    cart_items = CartItemSerializer(many=True)
  
     class Meta:
         model = Cart
@@ -32,4 +22,5 @@ class CartReadSerializer(serializers.ModelSerializer):
             'created_on',
             'cart_items',
         ]
+
         

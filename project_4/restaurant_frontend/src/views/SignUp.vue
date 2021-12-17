@@ -29,7 +29,6 @@ function handleSubmit() {
             "postal_code": postalCode.value,
             "unit_no": unitNo.value
         }
-
     })
 }
 </script>

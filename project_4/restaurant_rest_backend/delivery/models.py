@@ -9,7 +9,6 @@ class Cart(models.Model):
         on_delete=models.CASCADE
     )
     created_on = models.DateTimeField()
-    ordered_on = models.DateTimeField(null=True,blank=True)
 
 
 class CartItem(models.Model):

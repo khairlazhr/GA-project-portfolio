@@ -1,18 +1,11 @@
-<script setup>
-
-
-</script>
-
-
 <template>
-  <div class="bg-white-100 py-6 md:py-12">
+  <div class="py-6 md:py-12 h-screen">
     <div class="container px-4 mx-auto">
       <div class="text-center max-w-2xl mx-auto">
         <div class="mt-4">
-          <img src="@/assets/AfterwitInterior__ColossalXPro13-min.jpg" alt="homepage-image" class="d-block max-w-full rounded shadow-md">
+          <img src="@/assets/AfterwitInterior__ColossalXPro13-min.jpg" alt="homepage-image" class="block max-w-full rounded">
         </div>
       </div>
-
       <div class="md:flex md:flex-wrap md:-mx-4 mt-6 md:mt-12">
         <div class="md:w-1/3 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
           <span class="w-20 border-t-2 border-solid border-white-200 inline-block mb-3"></span>

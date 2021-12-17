@@ -11,5 +11,5 @@ class MenuItemSerializer(serializers.HyperlinkedModelSerializer):
             "description",
             "availability",
             "price",
-            "image"
+            "imageURL"
         ]

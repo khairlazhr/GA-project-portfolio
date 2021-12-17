@@ -3,6 +3,8 @@ import Home from '@/views/Home.vue'
 import Menu from '@/views/Menu.vue'
 import Login from '@/views/Login.vue'
 import SignUp from '@/views/SignUp.vue'
+import Booking from '@/views/Booking.vue'
+import ItemShow from '@/views/ItemShow.vue'
 
 const routes = [
   {
@@ -13,7 +15,13 @@ const routes = [
   {
     path: '/menu',
     name: 'Menu',
-    component: Menu
+    component: Menu,
+  },
+  {
+    path: "/menu/:id",
+    name: 'MenuItem',
+    component: ItemShow,
+    props: true
   },
   {
     path: '/login',
@@ -24,6 +32,11 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: SignUp
+  },
+  {
+    path: "/bookings",
+    name: 'Bookings',
+    component: Booking
   }
 
 ]

@@ -1,11 +1,11 @@
 from django.db import models
 from django.db.models.aggregates import Min
 from accounts.models import User
+import datetime 
 
 # Create your models here.
 class TimeSlot(models.Model):
-    date = models.DateField()
-    time_slot = models.TimeField()
+    date_time_slot = models.DateTimeField(default=datetime.datetime.now())
     available_tables = models.IntegerField()
 
 class Booking(models.Model):
@@ -14,11 +14,10 @@ class Booking(models.Model):
         on_delete=models.CASCADE,
         related_name= "booking"
     )
-    time_slot = models.ForeignKey(
+    booked_slot = models.ForeignKey(
         to = TimeSlot,
         on_delete=models.CASCADE,
         related_name="bookings"
     )
-    booked_date = models.DateField()
     tables_booked = models.IntegerField(default=1) # 1 table can seat up to 4 people
 
