@@ -19,9 +19,7 @@ def menu_list(request):
 @api_view(['GET', 'POST'])
 def menu_detail(request, menu_id):
     menu_item = MenuItem.objects.get(pk=menu_id)
-
     if request.method == 'GET':
-        if request.user.is_authenticated:
             serializer = MenuItemSerializer(instance=menu_item)
 
             return Response(serializer.data, status=status.HTTP_200_OK)

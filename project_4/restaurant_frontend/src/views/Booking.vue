@@ -6,7 +6,6 @@ const props = defineProps({
   }
 })
 
-const number = ref(null)
 
 </script>
 
@@ -17,10 +16,10 @@ const number = ref(null)
             <div class="w-1/2 md:px-4 xl:px-6 mt-8 md:mt-0 shrink justify-end">
                 <img src="@/assets/AfterwitInterior__ColossalXPro50-min.jpg" alt="booking-image" class="block h-full max-w-full rounded overflow-hidden">
             </div>
-            <div v-if="isLoggedIn" class="w-1/2 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
-                <p class="text-gray-600 mb-3">Want to know how to reach us? Or even find us? Well, here you go. We're not hiding!</p>
+            <div v-if="!isLoggedIn" class="w-1/2 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
+                <p class="text-gray-600 mb-3">Log on first</p>
             </div>
-            <BookingComponent/>
+            <BookingComponent v-if="isLoggedIn"/>
         </div>
     </div>
 </template>

@@ -19,11 +19,11 @@ export default {
         </div>
         <router-link :to="{ name: 'MenuItem', params: { id: item_id } }">
             <button 
-                class="border border-black-500 text-white font-bold py-2 px-4 rounded mr-8">
+                class="border border-black-500 text-white font-bold py-2 px-4 rounded mb-4">
                 Add
             </button>
         </router-link>
-    </div>
+    </div>              
 </template>
 
 <style scoped>

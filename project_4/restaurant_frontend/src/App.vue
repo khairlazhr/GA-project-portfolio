@@ -9,7 +9,7 @@
           <router-link to="/">Home</router-link> |
           <router-link to="/menu">Menu</router-link> |
           <router-link to="/bookings">Bookings</router-link> |
-          <router-link to="/contact-us">Contact Us</router-link>
+          <router-link to="/contact">Contact Us</router-link>
         </div>
         <div v-if="!isLoggedIn">
           <router-link to="/login">Login</router-link> |
@@ -18,7 +18,7 @@
         <div v-if="isLoggedIn">
           <span>Welcome, {{ name }}!</span> |
           <router-link to="/checkout">Checkout</router-link> |
-          <router-link to="/logout">Logout</router-link>
+          <button @click.prevent="logout">Logout</button>
         </div>
       </div>
     </nav>
@@ -33,13 +33,26 @@
 
 <script setup>
 import { ref } from "vue"
-
+import axiosAuthenticated from "./axios"
+import router from './router';
 const isLoggedIn = ref(false)
 const name = ref("")
 
 function login(val) {
   isLoggedIn.value = true,
-  name.value = val.capitalize()
+  name.value = val
+}
+
+function logout() {
+  axiosAuthenticated({
+        method: "get",
+        url: "api/accounts/logout",
+    }).then(response => {
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        isLoggedIn.value = false;
+        router.push({ path: '/'})
+    })
 }
 </script>
 

@@ -7,7 +7,6 @@ let refresh = localStorage.getItem('refresh')
 
 
 axiosAuthenticated.defaults.headers.common = {'Authorization': `Bearer ${access}`}
-axiosRefresh.defaults.data({ "refresh": `${refresh}`})
 
 axiosAuthenticated.interceptors.response.use(
     response => response,
@@ -18,7 +17,9 @@ axiosAuthenticated.interceptors.response.use(
         }
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true
-            await axiosRefreshToken.post("/api/accounts/token/refresh");
+            await axiosRefreshToken.post("/api/accounts/token/refresh", {
+                "refresh": refresh
+            });
             return axiosAuthenticated(originalRequest)
         }
         return Promise.reject(error)
@@ -32,3 +33,5 @@ axiosRefresh.interceptors.response.use(
     },
     error => error
 )
+
+export default axiosAuthenticated

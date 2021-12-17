@@ -17,20 +17,20 @@ export default {
         <form @submit.prevent="handleSubmit">
             <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-full px-3">
-                    <label class="block text-lg font-bold text-white-700 mb-2" for="email">
-                            Email
+                    <label class="block text-lg font-bold text-white-700 mb-2" for="number">
+                        No. of People
                     </label>
                     <input 
-                        class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="email" type="number" v-model="number" placeholder="Indicate number of people">
+                        class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="number" type="number" v-model="number" placeholder="Indicate number of people">
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-full px-3">
                     <label class="block text-lg font-bold text-white-700 mb-2" for="password">
-                        Password
+                        Input Date
                     </label>
                     <input 
-                    class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="password" type="date" v-model="password" placeholder="*******">
+                    class="appearance-none block w-full text-black-700 rounded py-3 px-4 mb-3" id="date" type="date" v-model="date" placeholder="*******">
                 </div>
              </div>
         </form>

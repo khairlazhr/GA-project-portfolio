@@ -5,6 +5,8 @@ import Login from '@/views/Login.vue'
 import SignUp from '@/views/SignUp.vue'
 import Booking from '@/views/Booking.vue'
 import ItemShow from '@/views/ItemShow.vue'
+import Checkout from '@/views/Checkout.vue'
+import Contact from '@/views/Contact.vue'
 
 const routes = [
   {
@@ -37,6 +39,16 @@ const routes = [
     path: "/bookings",
     name: 'Bookings',
     component: Booking
+  },
+  {
+    path: "/checkout",
+    name: 'Checkout',
+    component: Checkout
+  },
+  {
+    path: "/contact",
+    name: 'Contact',
+    component: Contact
   }
 
 ]

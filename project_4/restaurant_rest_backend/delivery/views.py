@@ -1,6 +1,4 @@
 from rest_framework.decorators import api_view
-from accounts import serializers
-from accounts.models import Order, OrderItem
 from accounts.serializers import OrderReadSerializer
 
 from delivery.serializers import CartReadSerializer, CartItemSerializer
@@ -18,19 +16,13 @@ def cart(request):
             serializer = CartReadSerializer(instance = cart)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            cart = Cart.objects.get(user=request.user)
-            serializer = CartReadSerializer(instance = cart)
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET', "POST", "PATCH", "DELETE"])
 def checkout(request):
     cart = Cart.objects.get(user=request.user)
     if request.method == 'GET':
         if request.user.is_authenticated:
-            serializer = CartReadSerializer(instance = cart)
+            serializer = CartReadSerializer(instance=cart)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'PATCH':
