@@ -11,6 +11,7 @@ djangorestframework-simplejwt = "*"
 pytz = "*"
 stripe = "*"
 pillow = "*"
+python-decouple = "*"
 
 [dev-packages]
 
