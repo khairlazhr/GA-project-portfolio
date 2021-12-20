@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 md:py-12 h-screen">
+  <div class="py-6 md:py-12 min-h-screen flex flex-col mb-auto">
     <div class="container px-4 mx-auto">
       <div class="text-center max-w-2xl mx-auto">
         <div class="mt-4">

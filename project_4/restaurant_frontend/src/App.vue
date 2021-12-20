@@ -24,7 +24,7 @@
     </nav>
   </header>
   <router-view @login="login" :isLoggedin="isLoggedIn"/>
-  <footer>
+  <footer class="mt-6">
     <div class="credit">
       Created by Khairul Azhar | All Rights Reserved
     </div>

@@ -37,7 +37,7 @@ function handleSubmit() {
 </script>
 
 <template>
-    <div class="w-full h-screen flex flex-col items-center">
+    <div class="w-full min-h-screen flex flex-col mb-auto items-center">
         <form @submit.prevent="handleSubmit"  class="w-full max-w-lg mt-6">
             <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-full px-3">
