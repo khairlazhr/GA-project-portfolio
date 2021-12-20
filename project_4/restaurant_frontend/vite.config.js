@@ -6,6 +6,9 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    watch: {
+      usePolling: true
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:8000/',
