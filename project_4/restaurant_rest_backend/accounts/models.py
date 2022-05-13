@@ -7,8 +7,8 @@ from restaurant.models import MenuItem
 # Create your models here
 class User(AbstractUser):
     username = None
-    email = models.EmailField(max_length=255, unique=True)
-    mobile_number = models.CharField(max_length=50)
+    email = models.EmailField(max_length=255, unique=True, error_messages={'unique':"This email has already been registered."})
+    mobile_number = models.CharField(max_length=50, unique=True, error_messages={'unique':"This mobile number has already been registered."})
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -25,20 +25,28 @@ class DeliveryAddress(models.Model):
     postal_code = models.CharField(max_length=50)
     unit_no = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.user.email
+    
+
 class Order(models.Model):
     user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
         related_name="orders"
     )
-    ordered_on = models.DateTimeField()
     order_status = models.CharField(max_length=50, default='Booked')
-    total = models.DecimalField(max_digits=8, decimal_places=2)
+    total = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.email
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
         to=Order,
         on_delete=models.CASCADE,
+        related_name="order_items"
     )
     item = models.ForeignKey(
         to=MenuItem,

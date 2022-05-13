@@ -3,14 +3,12 @@ from .models import DeliveryAddress, User
 from restaurant.serializers import MenuItemSerializer
 from .models import OrderItem, Order
 import re
-from datetime import datetime
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
             'first_name', 
-            'last_name', 
             'email',
             'mobile_number',
             'password'
@@ -58,9 +56,11 @@ class DeliveryAddressSerializer(serializers.ModelSerializer):
 
 class OrderItemSerializer(serializers.ModelSerializer):
     item = MenuItemSerializer()
+
     class Meta:
         model = OrderItem
         fields = [
+            "id",
             "item",
             "quantity"
         ]
@@ -71,18 +71,22 @@ class OrderReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = [
-            'ordered_on',
-            'total'
             'order_status',
+            'created_on',
             'order_items',
+            'total'
         ]
-    def create(self, validated_data):
-        order_items = validated_data.pop["cart_items"]
-        order = Order.objects.create(ordered_on = datetime.now(), order_status="Booked", **validated_data)
-        for order_item in order_items:
-            OrderItem.objects.create(order=order, **order_item)
-        return order
 
+    def update(self, instance, validated_data):
+        order_items = validated_data.pop("order_items")
+
+        instance.total = validated_data.get("total", instance.total)
+        instance.save()
+
+        for order_item in order_items:
+            OrderItem.objects.create(order=instance, item_id=order_item["item"]["id"], quantity=order_item["quantity"])
+
+        return instance
 
 
 

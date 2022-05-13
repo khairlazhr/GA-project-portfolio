@@ -1,14 +1,14 @@
 from django.http.response import JsonResponse
 from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated, ValidationError
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from delivery.models import Cart
 from .models import DeliveryAddress, User, Order
-from datetime import datetime
 from django.contrib.auth.hashers import check_password
+
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer, DeliveryAddressSerializer, OrderReadSerializer
@@ -16,24 +16,20 @@ from .serializers import UserSerializer, DeliveryAddressSerializer, OrderReadSer
 # Create your views here.
 @api_view(["POST"])
 def signup(request):
-    if request.data["password"] == request.data["confirm_password"]:
-        serializer = UserSerializer(data= {
-            "email": request.data["email"],
-            "password": request.data["password"],
-            "first_name": request.data["first_name"],
-            "last_name": request.data["last_name"],
-            "mobile_number": request.data["mobile_number"],
-        })
-        if serializer.is_valid():
-            serializer.save()
-            user = User.objects.get(email=request.data["email"])
-            DeliveryAddress.objects.create(user=user, address= request.data["address"], postal_code = request.data["postal_code"], unit_no = request.data["unit_no"])
+    serializer = UserSerializer(data= {
+        "email": request.data["email"],
+        "password": request.data["password"],
+        "first_name": request.data["name"],
+        "mobile_number": request.data["mobile_number"],
+    })
 
-            return Response(data={ 'user': serializer.data["email"] }, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        raise ValidationError("Both passwords must match")
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        user = User.objects.get(email=request.data["email"])
+        DeliveryAddress.objects.create(user=user, address= request.data["address"], postal_code = request.data["postal_code"], unit_no = request.data["unit_no"])
+
+        return Response(data={ 'user': serializer.data["email"] }, status=status.HTTP_201_CREATED)
+
 
 
 @api_view(["POST"])
@@ -48,22 +44,23 @@ def login(request):
         current_user = User.objects.get(email=email)
         cart_exists = Cart.objects.filter(user=current_user)
         if not cart_exists:
-            Cart.objects.create(user=current_user, created_on=datetime.now())
+            Cart.objects.create(user=current_user)
+        
         return JsonResponse({
-            "first_name": current_user.first_name,
+            "name": current_user.first_name,
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         })
     else:
         raise AuthenticationFailed('The email/password entered is invalid.')
 
-@api_view(["GET"])
+@api_view(["POST"])
 def logout(request):
     if request.user.is_authenticated:
         Cart.objects.get(user=request.user).delete()
-        return JsonResponse({"message": "You have logged out successfully."})
+        return Response(status=status.HTTP_200_OK)
     else: 
-        return redirect("/login")
+        return NotAuthenticated('You have to be logged in first')
 
 @api_view(["GET", "PATCH"])
 def profile_detail(request, profile_id):
@@ -86,25 +83,22 @@ def profile_detail(request, profile_id):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(["PATCH"])
-def forgot_pw(request):
-    user = User.objects.filter(email=request.data["email"])
-    if user:
-        current_password = request.data["old_password"]
-        check_password(current_password, user.password)
-        if check_password:
-            if request.data["password"] == request.data["confirm_password"]:
-                serializer = UserSerializer(instance=user, data=request.data, partial=True)
-                if serializer.is_valid():
-                    serializer.save()
+# @api_view(["PATCH"])
+# def forgot_pw(request):
+#     if request.user.is_authenticated:
+#         user = User.objects.filter(email=request.data["email"])
+#         if user:
+#             current_password = request.data["old_password"]
+#             check_password(current_password, user.password)
+#             if check_password:
+#                 serializer = UserSerializer(instance=user, data=request.data, partial=True)
+                
+#                 if serializer.is_valid(raise_exception=True):
+#                     serializer.save()
 
-                return Response(data= {"message": "Password has been changed successfully"}, status=status.HTTP_200_OK)
-            else:
-                raise ValidationError("Both passwords must match")
-        else:
-            raise ValidationError("You have entered an invalid username/password")
-    else:
-        raise ValidationError("You have entered an invalid username/password")
+#                     return Response(data= {"message": "Password has been changed successfully"}, status=status.HTTP_200_OK)
+#         else:
+#             raise ValidationError("You have entered an invalid username/password")
 
 @api_view(["PATCH"])
 def change_pw(request):
@@ -113,10 +107,9 @@ def change_pw(request):
         current_password = request.data["old_password"]
         check_password(current_password, user.password)
         if check_password:
-            if request.data["password"] == request.data["confirm_password"]:
-                serializer = UserSerializer(instance=user, data=request.data, partial=True)
-                if serializer.is_valid():
-                    serializer.save()
+            serializer = UserSerializer(instance=user, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
 
                 return Response(data= {"message": "Password has been changed successfully"}, status=status.HTTP_200_OK)
             else:

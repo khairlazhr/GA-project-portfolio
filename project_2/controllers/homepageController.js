@@ -3,8 +3,7 @@ const controller = express.Router();
 
 controller.get("/", (req, res) => {
     res.render("homepage.ejs", {
-        currentUser: req.session.username,
-        loggedin: req.query.loggedin
+        currentUser: req.session.username
     })
 });
 

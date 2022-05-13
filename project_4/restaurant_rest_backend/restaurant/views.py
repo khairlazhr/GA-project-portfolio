@@ -2,7 +2,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from delivery.models import Cart, CartItem
-from delivery.serializers import CartItemSerializer
 
 from restaurant.models import MenuItem
 from restaurant.serializers import MenuItemSerializer
@@ -33,4 +32,4 @@ def menu_detail(request, menu_id):
                 cart_item.save()
             else:
                 CartItem.objects.create(cart=cart, item_id=request.data["item_id"], quantity=request.data["quantity"])
-            return Response(status=status.HTTP_200_OK)
+            return Response(data=request.data,status=status.HTTP_200_OK)

@@ -44,3 +44,7 @@ body {
 #deck-card-table {
     height: 500px
 }
+
+.warning {
+    color: red;
+}

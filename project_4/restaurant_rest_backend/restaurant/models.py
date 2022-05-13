@@ -1,5 +1,5 @@
 from django.db import models
-
+from nanoid import generate
 # Create your models here.
 class Restaurant(models.Model):
     name = models.CharField(max_length = 100)
@@ -13,3 +13,6 @@ class MenuItem(models.Model):
     availability = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     imageURL = models.CharField(max_length=200)
+
+    def __str__(self):
+        return str(self.food_name)

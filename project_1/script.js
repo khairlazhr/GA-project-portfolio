@@ -1,3 +1,4 @@
+// Game State
 const game = {
   state: "initial",
   p1score: 0,

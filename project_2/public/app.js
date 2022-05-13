@@ -69,3 +69,7 @@ function saveValue() {
         document.querySelector("#type").selectedIndex = "1"
     }
 }
+
+function backButton() {
+  history.back()
+}

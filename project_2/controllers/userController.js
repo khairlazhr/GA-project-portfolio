@@ -10,17 +10,15 @@ function isAuthenticated() {
       if (req.session.username) {
           next()
         } else {
-          res.status(403);
-          res.send("You need to be logged in!");
+          res.redirect("/users/login");
         }
     }
 };
 
 
-
 controller.get("/signup", (req,res) => {
     if (req.session.username){
-        res.redirect("/?loggedin=true");
+        res.redirect("/");
     } else {
       res.render("users/signup.ejs", {
         currentUser: req.session.username
@@ -30,7 +28,6 @@ controller.get("/signup", (req,res) => {
 
 controller.post("/signup",
   async (req,res) => {
-  try {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
     const hashedConfirmPassword = await bcrypt.hash(req.body.confirmpw, salt)
@@ -44,16 +41,14 @@ controller.post("/signup",
       req.session.username = user.username;
       res.redirect("/users/login")
     }
-  } catch (err) {
-    console.log(err)
-  }
 })
 
 
 controller.get("/login", (req, res) => {
     if (!req.session.username) {
       res.render("users/login.ejs", {
-        currentUser: req.session.username
+        currentUser: req.session.username,
+        userpwalert: req.query.userpwalert
       });
     } else {
       res.redirect("/");
@@ -63,14 +58,14 @@ controller.get("/login", (req, res) => {
 controller.post("/login", async (req, res) => {
   const selectedUser = await userModel.findOne({username: req.body.username});
   if (!selectedUser) {
-    return res.send("Username does not exist");
+    return res.redirect("/users/login/?userpwalert=true");
   } 
   if (bcrypt.compareSync(req.body.password, selectedUser.password)) {
     req.session.username = selectedUser.username;
     req.session.decks = selectedUser.decks
-    res.redirect("/");
+    res.redirect("back");
   } else {
-    res.send("Wrong password!");
+    res.redirect("/users/login/?userpwalert=true");
   }
 })
 
@@ -83,6 +78,7 @@ controller.get("/changepw", (req, res) => {
   })
 }
 }); 
+
 
 controller.put("/:id", async (req, res) => {
   try {

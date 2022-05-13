@@ -1,18 +1,29 @@
 from django.db import models
 from django.db.models.aggregates import Min
 from accounts.models import User
-import datetime 
 
 # Create your models here.
 class TimeSlot(models.Model):
-    date_time_slot = models.DateTimeField(default=datetime.datetime.now())
-    available_tables = models.IntegerField()
+    date_slot = models.DateField(null=True, blank=True)
+    time_slot = models.TimeField(null=True, blank=True)
+    maximum_tables = models.IntegerField(default=30)
+
+    @property
+    def get_booked_tables_total(self):
+        bookings = self.bookings_set.all()
+        total = sum([booking.tables_booked for booking in bookings])
+
+        return total
+    
+    @property
+    def get_available_tables(self):
+        return (self.maximum_tables - self.get_booked_tables_total)
 
 class Booking(models.Model):
     user = models.OneToOneField(
         to=User,
         on_delete=models.CASCADE,
-        related_name= "booking"
+        related_name= "bookings"
     )
     booked_slot = models.ForeignKey(
         to = TimeSlot,

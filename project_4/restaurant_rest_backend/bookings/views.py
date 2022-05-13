@@ -14,13 +14,15 @@ def reserve(request):
             serializer = TimeSlotSerializer()
 
             return Response(serializer.data, status=status.HTTP_200_OK)
+
     elif request.post == "POST":
         if request.user.is_authenticated:
             time_slot = TimeSlot.objects.get(pk=request.data["slot_id"])
-            serializer = BookingCreateSerializer(data= {
-            "user": request.user,
-            "booked_slot": request.data["slot_id"],
-            "tables_booked": request.data["tables_booked"]})
+            serializer = BookingCreateSerializer(data={
+                "user": request.user,
+                "booked_slot": request.data["slot_id"],
+                "tables_booked": request.data["tables_booked"]
+            })
             if serializer.is_valid:
                 serializer.save()
             serializer2 = TimeSlotSerializer(instance=time_slot, data={ "available_tables": request.data["available_tables"]}, partial=True)
