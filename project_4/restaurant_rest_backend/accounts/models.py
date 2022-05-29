@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from nanoid import generate
 from .managers import CustomUserManager
 from restaurant.models import MenuItem
 
 # Create your models here
 class User(AbstractUser):
     username = None
+    id = models.CharField(max_length=15, default=generate(size=15), editable=False, unique=True, primary_key=True)
     email = models.EmailField(max_length=255, unique=True, error_messages={'unique':"This email has already been registered."})
     mobile_number = models.CharField(max_length=50, unique=True, error_messages={'unique':"This mobile number has already been registered."})
     
@@ -36,6 +37,7 @@ class Order(models.Model):
         related_name="orders"
     )
     order_status = models.CharField(max_length=50, default='Booked')
+    address = models.CharField(max_length=255, null=True, blank=True)
     total = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     created_on = models.DateTimeField(auto_now_add=True)
 

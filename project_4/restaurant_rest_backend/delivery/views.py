@@ -2,14 +2,13 @@ from functools import partial
 from rest_framework.decorators import api_view
 from accounts.serializers import OrderReadSerializer
 from accounts.models import Order
-from delivery.serializers import CartReadSerializer
+from delivery.serializers import CartReadSerializer, CartItemSerializer
 from .models import Cart, CartItem
 from rest_framework.response import Response
 from rest_framework import status
-from datetime import datetime
 
 # Create your views here.
-@api_view(['GET', "PUT", "DELETE"])
+@api_view(['GET', "PATCH", "DELETE"])
 def cart(request):
     cart = Cart.objects.get(user=request.user.id)
     if request.method == 'GET':
@@ -19,9 +18,10 @@ def cart(request):
         else: 
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-    elif request.method == 'PUT':
+    elif request.method == 'PATCH':
         if request.user.is_authenticated:
-            serializer = CartReadSerializer(instance=cart, data=request.data)
+            cart_item = CartItem.objects.get(id=request.data["id"])
+            serializer = CartItemSerializer(cart_item, data={ "quantity": request.data["quantity"]}, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
         
@@ -31,7 +31,7 @@ def cart(request):
 
     elif request.method == 'DELETE':
         if request.user.is_authenticated:
-            cart_item = CartItem.objects.get(id=request.data["item_id"])
+            cart_item = CartItem.objects.get(id=request.data["id"])
             cart_item.delete()
 
             return Response(status=status.HTTP_200_OK)

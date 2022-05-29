@@ -6,11 +6,14 @@ from accounts.models import User
 class TimeSlot(models.Model):
     date_slot = models.DateField(null=True, blank=True)
     time_slot = models.TimeField(null=True, blank=True)
-    maximum_tables = models.IntegerField(default=30)
+    maximum_tables = models.IntegerField(default=10)
+
+    def __str__(self):
+        return str(self.date_slot) + " - " + str(self.time_slot)
 
     @property
     def get_booked_tables_total(self):
-        bookings = self.bookings_set.all()
+        bookings = self.bookings.all()
         total = sum([booking.tables_booked for booking in bookings])
 
         return total
@@ -20,7 +23,7 @@ class TimeSlot(models.Model):
         return (self.maximum_tables - self.get_booked_tables_total)
 
 class Booking(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
         related_name= "bookings"
@@ -30,5 +33,7 @@ class Booking(models.Model):
         on_delete=models.CASCADE,
         related_name="bookings"
     )
+    date_slot = models.DateField(null=True, blank=True)
+    time_slot = models.TimeField(null=True, blank=True)
     tables_booked = models.IntegerField(default=1) # 1 table can seat up to 4 people
 

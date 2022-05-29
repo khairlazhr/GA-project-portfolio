@@ -19,15 +19,22 @@ function Menu() {
 
     return (
         <div>
-            <h1>This is the Menu</h1>
-            <div className="menu">
+            <div className="menu page-container">
+                <h1 className="menu__title">Menu</h1>
                 {menu.map((item)=> (
-                    <Link key={item.id} to={`${item.id}`} state= {{ background: location }}>
-                        <img
-                        className="img"
-                        src={item.imageURL}
-                        alt={item.name}
-                        />
+                    <Link className="link" key={item.id} to={`${item.id}`} state= {{ background: location }}>
+                        <div className="menu__item-card">
+                            <img
+                            className="menu__item-image"
+                            src={item.imageURL}
+                            alt={item.food_name}
+                            />
+                            <div className="menu__item-info">
+                                <p className="menu__item-name">{item.food_name}</p>
+                                <p>Price: ${item.price}</p>
+                            </div>
+                            
+                        </div>
                     </Link>
                 ))}
             </div>

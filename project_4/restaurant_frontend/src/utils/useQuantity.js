@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-function useQuantity() {
-    const [quantity, setQuantity] = useState(1)
+function useQuantity(value) {
+    const [quantity, setQuantity] = useState(value)
 
     function quantityDecrement(e) {
         if (!e.currentTarget.matches("button")) return

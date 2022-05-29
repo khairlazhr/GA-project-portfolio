@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import DeliveryAddress, User
+from bookings.serializers import BookingReadSerializer
 from restaurant.serializers import MenuItemSerializer
-from .models import OrderItem, Order
+from .models import OrderItem, Order, DeliveryAddress, User
 import re
+from datetime import date, timedelta
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,15 +45,26 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 
+            'email',
+            'mobile_number'
+        ]
+
 class DeliveryAddressSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = DeliveryAddress
         fields = [
+            "id",
             "address",
             "postal_code",
             "unit_no"
         ]
-
+        
 
 class OrderItemSerializer(serializers.ModelSerializer):
     item = MenuItemSerializer()
@@ -67,13 +79,16 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderReadSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True)
- 
+    id = serializers.IntegerField(required=False)
+    
     class Meta:
         model = Order
         fields = [
+            'id',
             'order_status',
             'created_on',
             'order_items',
+            'address',
             'total'
         ]
 
@@ -90,4 +105,26 @@ class OrderReadSerializer(serializers.ModelSerializer):
 
 
 
-        
+class ProfileReadSerializer(serializers.ModelSerializer):
+    outstanding_orders = serializers.SerializerMethodField()
+    active_booking = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 
+            'email',
+            'mobile_number',
+            'outstanding_orders',
+            'active_booking'
+        ]
+
+    def get_outstanding_orders(self, instance):
+        outstanding_orders= instance.orders.filter(order_status="Booked")
+        return OrderReadSerializer(outstanding_orders, many=True).data
+
+    def get_active_booking(self, instance):
+        start_date= date.today()
+        end_date = start_date + timedelta(days=14)
+        active_booking = instance.bookings.filter(date_slot__range=[start_date, end_date])
+        return BookingReadSerializer(active_booking, many=True).data

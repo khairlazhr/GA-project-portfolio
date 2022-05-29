@@ -3,13 +3,13 @@ import { useNavigate, useParams, useLocation } from "react-router-dom"
 import useQuantity from "../utils/useQuantity"
 import axiosToken from "../utils/axios"
 
-function MenuItemView({ currentUser }) {
+function MenuItemView({ currentUser, fetchCart }) {
     let location = useLocation()
     let navigate = useNavigate()
     let { id } = useParams()
 
     const [menuItem, setMenuItem] = useState({})
-    const [quantity, quantityDecrement, quantityIncrement] = useQuantity()
+    const [quantity, quantityDecrement, quantityIncrement] = useQuantity(1)
 
     async function addItem() {
         if (currentUser) {
@@ -22,6 +22,7 @@ function MenuItemView({ currentUser }) {
                 }
             })
             if (response.status === 200) {
+                fetchCart()
                 navigate("/menu")
             }
         } else {
@@ -36,22 +37,20 @@ function MenuItemView({ currentUser }) {
 
             setMenuItem(data)
         }
-
         fetchMenuItem()
-    })
+    }, [id])
 
     return (
-        <div className="normal">
-            <img src={menuItem.imageURL} />
-                <h2>{menuItem.food_name}</h2>
-
-                <p>{menuItem.description}</p>
-                <div>
-                    <button className="" onClick={quantityDecrement}><i className="ri-subtract-fill ri-1x"></i></button>
-                    <p>{quantity}</p>
-                    <button className="" onClick={quantityIncrement}><i className="ri-add-fill ri-1x"></i></button>
-                </div>
-                <button className="" onClick={addItem}>Add</button>
+        <div className="menu-dialog__container page-container menu-dialog__container--item">
+            <img className="menu-dialog__image" src={menuItem.imageURL} alt={menuItem.food_name}/>
+            <h3 className="menu-dialog__title">{menuItem.food_name}</h3>
+            <p className="menu-dialog__description">{menuItem.description}</p>
+            <div className="menu-dialog__counter">
+                <button className="menu-dialog__button" onClick={quantityDecrement}><i className="ri-subtract-fill ri-1x"></i></button>
+                <p>{quantity}</p>
+                <button className="menu-dialog__button" onClick={quantityIncrement}><i className="ri-add-fill ri-1x"></i></button>
+            </div>
+            <button className="menu-dialog__add-button" onClick={addItem}>Add</button>
         </div>
     )
    

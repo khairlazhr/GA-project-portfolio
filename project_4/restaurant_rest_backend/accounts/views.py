@@ -11,7 +11,7 @@ from django.contrib.auth.hashers import check_password
 
 
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import UserSerializer, DeliveryAddressSerializer, OrderReadSerializer
+from .serializers import ProfileReadSerializer, UserSerializer, UserUpdateSerializer, DeliveryAddressSerializer, OrderReadSerializer
 
 # Create your views here.
 @api_view(["POST"])
@@ -48,6 +48,7 @@ def login(request):
         
         return JsonResponse({
             "name": current_user.first_name,
+            "user_id": current_user.id,
             "refresh": str(refresh),
             "access": str(refresh.access_token),
         })
@@ -68,20 +69,25 @@ def profile_detail(request, profile_id):
     if request.method == 'GET':
         if request.user.is_authenticated:
             if (profile_id == request.user.id):
-                serializer = UserSerializer(instance=user)
+                serializer = ProfileReadSerializer(instance=user)
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else: 
                 return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+                
     elif request.method == 'PATCH':
         if request.user.is_authenticated:
-            serializer = UserSerializer(instance=user, data=request.data, partial=True)
+            serializer = UserUpdateSerializer(instance=user, data=request.data, partial=True)
 
             if serializer.is_valid():
                 serializer.save()
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 # @api_view(["PATCH"])
 # def forgot_pw(request):
@@ -101,7 +107,7 @@ def profile_detail(request, profile_id):
 #             raise ValidationError("You have entered an invalid username/password")
 
 @api_view(["PATCH"])
-def change_pw(request):
+def change_pw(request, profile_id):
     if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.id)
         current_password = request.data["old_password"]
@@ -113,34 +119,53 @@ def change_pw(request):
 
                 return Response(data= {"message": "Password has been changed successfully"}, status=status.HTTP_200_OK)
             else:
-                raise ValidationError("Both passwords must match")
+                raise ValidationError("Your new password does not meet the requirements.")
         else:
             raise ValidationError("You have entered an invalid password")
 
-@api_view(["GET", "PATCH"])
+@api_view(["GET", "POST", "PATCH"])
 def address_list(request, profile_id):
-    delivery_address = DeliveryAddress.objects.get(user_id=profile_id)
+    delivery_addresses = DeliveryAddress.objects.filter(user_id=profile_id)
     if request.method == 'GET':
         if request.user.is_authenticated:
             if (profile_id == request.user.id):
-                serializer = DeliveryAddressSerializer(instance=delivery_address)
+                serializer = DeliveryAddressSerializer(delivery_addresses, many=True)
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else: 
                 return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    elif request.method == "POST":
+        if request.user.is_authenticated:
+            if (profile_id == request.user.id):
+                delivery_address = DeliveryAddress.objects.create(user=request.user)
+                serializer = DeliveryAddressSerializer(instance=delivery_address, data=request.data)
+
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save()
+
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else: 
+                return Response(status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
     elif request.method == 'PATCH':
         if request.user.is_authenticated:
             if (profile_id == request.user.id):
-                serializer = UserSerializer(instance=delivery_address, data=request.data, partial=True)
+                delivery_address = DeliveryAddress.objects.get(pk=request.data["id"])    
+                serializer = DeliveryAddressSerializer(instance=delivery_address, data=request.data, partial=True)
 
-                if serializer.is_valid():
+                if serializer.is_valid(raise_exception=True):
                     serializer.save()
 
                     return Response(serializer.data, status=status.HTTP_200_OK)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             else: 
                 return Response(status=status.HTTP_403_FORBIDDEN)
-
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(["GET"])
 def order_list(request, profile_id):
@@ -152,3 +177,5 @@ def order_list(request, profile_id):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else: 
             return Response(status=status.HTTP_403_FORBIDDEN)
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)

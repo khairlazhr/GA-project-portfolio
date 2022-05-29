@@ -1,34 +1,47 @@
 import logo from "../images/logo.png"
 import {Link} from "react-router-dom"
+import CustomLink from "./CustomNavBarLink"
 
-function Header({ currentUser, logout }) {
+function Header({ currentUser, logout, userId }) {
     return (
-        <header>
-            <div>
-                <div>
-                    <img src={logo} alt="Cafe logo"/>
-                    <h3>Cafena</h3>
-                    <p>A cup of coffee and more</p>
+        <header className="nav-header">
+            <div className="nav-header__title-bar">
+                <div className="nav-header__title-container">
+                    <img className="nav-header__logo" src={logo} alt="Cafe logo"/>
+                    <h3 className="nav-header__title">Cafena</h3>
+                    <p className="nav-header__sub-title">A cup and more.</p>
                 </div>
-                <div>
+                <div className={currentUser ? "nav-header__link-container--user" : "nav-header__link-container--anonymous"}>
                     {currentUser 
-                    ? <div>
-                        <p>Welcome, {currentUser}</p>
-                        <Link to="/cart">Cart</Link>
-                        <button onClick={() => logout()}>Log Out</button>
-                    </div> 
-                    :<div>
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
-                    </div>}
+                    ? <>
+                        <Link to={`/profile/${userId}`} className="nav-header__welcome">
+                            <i className="ri-user-fill"></i>
+                            {currentUser}
+                        </Link>
+                        <Link className="link nav-header__link--cart" to="/cart">Cart</Link>
+                        <button className="link nav-header__link--logout" onClick={() => logout()}>Log Out</button>
+                    </>
+                        
+                    :<>
+                        <Link className="link nav-header__link--login" to="/login">Login</Link>
+                        <Link className="link nav-header__link--register"  to="/register">Register</Link>
+                    </>}
                 </div>
             </div>
-            <nav>
-                <ul className="nav-list">
-                    <li className="nav-item"><Link to="/" className="nav__link">Home</Link></li>
-                    <li className="nav-item"><Link to="/menu" className="nav__link">Menu</Link></li>
-                    <li className="nav-item"><Link to="/bookings" className="nav__link">Bookings</Link></li>
-                    <li className="nav-item"><Link to="/contact" className="nav__link">Contact Us</Link></li>
+            <nav className="nav-header__navbar">
+                <ul className="nav-header__list">
+                    <li className="nav-header__item">
+                        <CustomLink to="/" className="link nav-header__link--navbar">Home</CustomLink>
+                    </li>
+                    <li className="nav-header__item">
+                        <CustomLink to="/menu" className="link nav-header__link--navbar">Menu</CustomLink>
+                    </li>
+                    <li className="nav-header__item">
+                        <CustomLink to="/bookings" className="link nav-header__link--navbar">Bookings</CustomLink>
+                    </li>
+                    <li className="nav-header__item">
+                        <CustomLink to="/contact" className="link nav-header__link--navbar">Contact Us</CustomLink>
+                    </li>
                 </ul>
             </nav>
         </header>

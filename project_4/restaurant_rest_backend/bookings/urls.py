@@ -4,4 +4,5 @@ from bookings import views
 
 urlpatterns = [
     path('reserve', views.reserve, name='reserve'),
+    path('booking/<int:booking_id>', views.bookings, name='order_detail'),
 ]

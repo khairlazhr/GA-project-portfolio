@@ -5,12 +5,15 @@ from restaurant.serializers import MenuItemSerializer
 class CartItemSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     item = MenuItemSerializer()
+    price = serializers.DecimalField(8,2, source="get_item_price")
+
     class Meta:
         model = CartItem
         fields = [
             "id",
             "item",
-            "quantity"
+            "quantity",
+            "price"
         ]
 
 
