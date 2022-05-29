@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'restaurant_rest_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DATABASE_NAME'),
+        'NAME': "cafenacoffee",
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': config('DATABASE_HOST'),
-        'PORT': config('DATABASE_PORT')
+        'PORT': "5432"
     }
 }
 
