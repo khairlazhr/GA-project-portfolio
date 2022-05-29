@@ -152,9 +152,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
-]
+CORS_ORIGIN_WHITELIST = ['https://cafena-coffee-567.netlify.app/']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
