@@ -15,7 +15,7 @@ function Cart({ cart, fetchCart }) {
             try {
 
                 const response = await axiosToken({
-                    url: `/api/accounts/profile/${accessObject.userId}/addresses`,
+                    url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${accessObject.userId}/addresses`,
                     method: "GET"
                 })
                 if (response.status === 200) {
@@ -52,7 +52,7 @@ function Cart({ cart, fetchCart }) {
                 onSubmit={async(values) => {
                     try {
                         const response = await axiosToken({
-                            url: `/api/delivery/checkout`,
+                            url: `https://cafenacoffee.herokuapp.com/api/delivery/checkout`,
                             method: "POST",
                             data: {
                                 order_items: cart.cart_items,

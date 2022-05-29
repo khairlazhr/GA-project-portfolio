@@ -33,7 +33,7 @@ function ProfileEdit() {
                 try {
                     const formData = getChangedValues(values, initialValues)
                     const response = await axiosToken({
-                        url: `/api/accounts/profile/${id}`,
+                        url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${id}`,
                         method: "PATCH",
                         data: {
                             first_name: formData.name,

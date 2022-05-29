@@ -6,7 +6,7 @@ function CartComponent({ id, item, quantity, price, fetchCart }) {
 
     async function removeItem() {
         const response = await axiosToken({
-            url: "/api/delivery/cart",
+            url: "https://cafenacoffee.herokuapp.com/api/delivery/cart",
             method: "DELETE",
             data: {
                 "id": parseInt(id)

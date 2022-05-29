@@ -14,7 +14,7 @@ function MenuItemView({ currentUser, fetchCart }) {
     async function addItem() {
         if (currentUser) {
             const response = await axiosToken({
-                url: `/api/restaurant/menu/${id}`,
+                url: `https://cafenacoffee.herokuapp.com/api/restaurant/menu/${id}`,
                 method: "POST",
                 data: {
                     item_id: parseInt(id),
@@ -32,7 +32,7 @@ function MenuItemView({ currentUser, fetchCart }) {
 
     useEffect(() => {
         async function fetchMenuItem() {
-            const response = await fetch(`/api/restaurant/menu/${id}`)
+            const response = await fetch(`https://cafenacoffee.herokuapp.com/api/restaurant/menu/${id}`)
             const data = await response.json()
 
             setMenuItem(data)

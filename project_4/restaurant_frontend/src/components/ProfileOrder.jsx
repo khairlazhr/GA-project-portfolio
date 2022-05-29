@@ -10,7 +10,7 @@ function ProfileOrder() {
         async function fetchOrders() {
             try {
                 const response = await axiosToken({
-                    url: `/api/accounts/profile/${id}/orders`,
+                    url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${id}/orders`,
                     method: "GET"
                 })
                 if (response.status === 200) {

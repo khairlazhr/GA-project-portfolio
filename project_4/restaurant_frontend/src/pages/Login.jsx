@@ -26,7 +26,7 @@ function Login({ loginCurrentUser, fetchCart }) {
                 try {
                     const  response = await axios({
                         method: "POST",
-                        url: "/api/accounts/login",
+                        url: "https://cafenacoffee.herokuapp.com/api/accounts/login",
                         data: {
                             email: values.email,
                             password: values.password,

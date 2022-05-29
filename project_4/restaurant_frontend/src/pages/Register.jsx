@@ -24,7 +24,7 @@ function FormikStepper({ children, ...props}) {
                 try {
                     const  response = await axios({
                         method: "POST",
-                        url: "/api/accounts/signup",
+                        url: "https://cafenacoffee.herokuapp.com/api/accounts/signup",
                         data: {
                             email: values.email,
                             password: values.password,

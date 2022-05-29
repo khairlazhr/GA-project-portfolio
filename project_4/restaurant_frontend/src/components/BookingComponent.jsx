@@ -44,7 +44,7 @@ function BookingComponent() {
         async function fetchListOfDates() {
             const response = await axiosToken({
                 method: "GET",
-                url: "/api/bookings/reserve"
+                url: "https://cafenacoffee.herokuapp.com/api/bookings/reserve"
             })
             if (response.status === 200) {
                 const data = response.data.filter((date) => date.available_tables !== 0)
@@ -91,7 +91,7 @@ function BookingComponent() {
                     const booked_slot = submitData.find(date => date.time_slot === values.timeSlot)
                     const  response = await axiosToken({
                         method: "POST",
-                        url: "/api/bookings/reserve",
+                        url: "https://cafenacoffee.herokuapp.com/api/bookings/reserve",
                         data: {
                             ...booked_slot,
                             tables_booked: values.tablesBooked

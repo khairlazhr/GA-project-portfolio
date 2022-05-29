@@ -21,7 +21,7 @@ function CartItemModal({fetchCart}) {
 
     async function editQuantity() {
         const response = await axiosToken({
-            url: "/api/delivery/cart",
+            url: "https://cafenacoffee.herokuapp.com/api/delivery/cart",
             method: "PATCH",
             data: {
                 "id": parseInt(id),

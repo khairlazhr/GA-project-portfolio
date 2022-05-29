@@ -33,7 +33,7 @@ function ProfileAddressEdit() {
                 try {
                     const formData = getChangedValues(values, initialValues)
                     const response = await axiosToken({
-                        url: `/api/accounts/profile/${id}/addresses`,
+                        url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${id}/addresses`,
                         method: "PATCH",
                         data: {
                             id: location.state.id,

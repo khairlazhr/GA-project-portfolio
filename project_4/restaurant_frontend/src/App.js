@@ -37,7 +37,7 @@ function App() {
 	// Click Functions
 	async function fetchCart() {
         try {
-            const response = await axiosToken("/api/delivery/cart")
+            const response = await axiosToken("https://cafenacoffee.herokuapp.com/api/delivery/cart")
             setCart(response.data)
         } catch {
             navigate("/login")
@@ -51,7 +51,7 @@ function App() {
 	}
 
 	async function logout() {
-		const response = await axiosToken("/api/accounts/logout", {
+		const response = await axiosToken("https://cafenacoffee.herokuapp.com/api/accounts/logout", {
 			method: "POST"
 		})
 		if (response.status === 200) {

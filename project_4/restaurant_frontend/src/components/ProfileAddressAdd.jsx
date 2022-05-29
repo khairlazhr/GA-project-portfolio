@@ -18,7 +18,7 @@ function ProfileAddressAdd() {
             onSubmit={async(values) => {
                 try {
                     const response = await axiosToken({
-                        url: `/api/accounts/profile/${id}/addresses`,
+                        url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${id}/addresses`,
                         method: "POST",
                         data: {
                             address: values.address,

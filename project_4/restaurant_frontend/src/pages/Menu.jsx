@@ -8,7 +8,7 @@ function Menu() {
 
     useEffect(() => {
         async function fetchMenu() {
-            const response = await fetch("/api/restaurant/menu")
+            const response = await fetch("https://cafenacoffee.herokuapp.com/api/restaurant/menu")
             const data = await response.json()
             
             setMenu(data)

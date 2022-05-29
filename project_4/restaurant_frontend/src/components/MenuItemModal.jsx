@@ -21,7 +21,7 @@ function MenuItemModal({ currentUser, fetchCart }) {
         if (currentUser) {
             try {
                 const response = await axiosToken({
-                    url: `/api/restaurant/menu/${id}`,
+                    url: `https://cafenacoffee.herokuapp.com/api/restaurant/menu/${id}`,
                     method: "POST",
                     data: {
                         item_id: parseInt(id),

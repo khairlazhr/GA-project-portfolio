@@ -12,7 +12,7 @@ function Profile() {
         async function fetchProfile() {
             try {
                 const response = await axiosToken({
-                    url: `/api/accounts/profile/${id}`,
+                    url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${id}`,
                     method: "GET"
                 })
                 if (response.status === 200) {
@@ -30,7 +30,7 @@ function Profile() {
     async function deleteBooking(booking_id) {
         try {
             const response = await axiosToken({
-                url: `/api/bookings/booking/${booking_id}`,
+                url: `https://cafenacoffee.herokuapp.com/api/bookings/booking/${booking_id}`,
                 method: "DELETE",
             })
             if (response.status === 200) {

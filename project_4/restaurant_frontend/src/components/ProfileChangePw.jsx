@@ -21,7 +21,7 @@ function ProfileChangePw() {
             onSubmit={async(values) => {
                 try {
                     const response = await axiosToken({
-                        url: `/api/accounts/profile/${id}/changepw`,
+                        url: `https://cafenacoffee.herokuapp.com/api/accounts/profile/${id}/changepw`,
                         method: "PATCH",
                         data: {
                             old_password: values.oldPassword,
