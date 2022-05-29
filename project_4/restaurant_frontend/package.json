@@ -2,7 +2,7 @@
   "name": "restaurant_frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000",
+  "homepage": "https://cafenacoffee.herokuapp.com/",
   "dependencies": {
     "@reach/alert": "^0.17.0",
     "@reach/dialog": "^0.17.0",
