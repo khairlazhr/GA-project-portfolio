@@ -60,6 +60,7 @@ function MenuItemModal({ currentUser, fetchCart }) {
         >
             <DialogContent
             aria-labelledby="dialog-content"
+            className="dialog-content"
             >
                 <div className="menu-dialog__container">
                     <img className="menu-dialog__image" src={menuItem.imageURL} alt={menuItem.food_name}/>
