@@ -12,7 +12,7 @@ function BookingComponent() {
     const tomorrow = new Date()
     tomorrow.setDate(today.getDate() + 1)
 
-    const accessObject = JSON.parse(localStorage.getItem("accessObject"))
+    
 
     const [listDates, setListDates] = useState([])
     const [date, setDate] = useState(tomorrow)
@@ -88,6 +88,7 @@ function BookingComponent() {
             }}
             onSubmit={async (values) => {
                 try {
+                    const accessObject = JSON.parse(localStorage.getItem("accessObject"))
                     const booked_slot = submitData.find(date => date.time_slot === values.timeSlot)
                     const  response = await axiosToken({
                         method: "POST",

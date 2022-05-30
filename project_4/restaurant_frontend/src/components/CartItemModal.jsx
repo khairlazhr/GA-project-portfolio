@@ -38,10 +38,14 @@ function CartItemModal({fetchCart}) {
     return (
         <DialogOverlay
         aria-labelledby="label"
+        className="dialogOverlay"
         onDismiss={closeModal}
         initialFocusRef={buttonRef}
         >
-            <DialogContent>
+            <DialogContent
+            className="dialog-content"
+            aria-labelledby="dialog-content"
+            >
                 <div className="cart-modal">
                     <h2>{`Edit Quantity (${foodName})`}</h2>
                     <hr className="hr"/>

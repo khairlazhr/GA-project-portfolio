@@ -16,7 +16,7 @@ axiosToken.interceptors.response.use(
     response => response,
     async error => {
         const originalRequest = error.config
-        if (error.response.status === 401 && originalRequest.url === "/api/accounts/token/refresh") {
+        if (error.response.status === 401 && originalRequest.url === "https://cafenacoffee.herokuapp.com//api/accounts/token/refresh") {
             return Promise.reject(error)
         }
         if (error.response.status === 401 && !originalRequest._retry) {
@@ -25,7 +25,7 @@ axiosToken.interceptors.response.use(
             const refreshToken = accessObject.refresh
             await axiosToken({
                 method: "POST",
-                url: "/api/accounts/token/refresh", 
+                url: "https://cafenacoffee.herokuapp.com//api/accounts/token/refresh", 
                 data: {
                     "refresh": refreshToken
                 }

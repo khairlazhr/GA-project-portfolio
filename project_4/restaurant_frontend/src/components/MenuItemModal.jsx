@@ -45,7 +45,7 @@ function MenuItemModal({ currentUser, fetchCart }) {
 
     useEffect(() => {
         async function fetchMenuItem() {
-            const response = await fetch(`/api/restaurant/menu/${id}`)
+            const response = await fetch(`https://cafenacoffee.herokuapp.com/api/restaurant/menu/${id}`)
             const data = await response.json()
             setMenuItem(data)
         }

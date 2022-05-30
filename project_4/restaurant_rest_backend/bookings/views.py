@@ -10,7 +10,7 @@ from datetime import date, timedelta
 @api_view(['GET', "POST"])
 def reserve(request):
     start_date= date.today() + timedelta(days=1)
-    end_date = start_date + timedelta(days=13)
+    end_date = start_date + timedelta(days=6)
     if request.method == 'GET':
         if request.user.is_authenticated:
             date_range = TimeSlot.objects.filter(date_slot__range=[start_date, end_date])

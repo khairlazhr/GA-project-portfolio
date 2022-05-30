@@ -125,6 +125,6 @@ class ProfileReadSerializer(serializers.ModelSerializer):
 
     def get_active_booking(self, instance):
         start_date= date.today()
-        end_date = start_date + timedelta(days=14)
+        end_date = start_date + timedelta(days=7)
         active_booking = instance.bookings.filter(date_slot__range=[start_date, end_date])
         return BookingReadSerializer(active_booking, many=True).data

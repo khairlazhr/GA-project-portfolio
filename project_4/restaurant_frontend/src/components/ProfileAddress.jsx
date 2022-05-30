@@ -38,15 +38,15 @@ function ProfileAddress() {
             </div>
             {userAddresses
             && userAddresses.map((address, i) => (
-                <div key={i}>
+                <div key={i} className="profile-container__address">
                     <div>
                         <p className="">Address: {address.address}</p >
                         <p className="">Unit No: {address.unit_no}</p >
                         <p className="">Postal Code: {address.postal_code}</p >
                     </div>
                     <div>
-                        <button type="button" onClick={() => editAddress(address.id, address)}>Edit</button>
-                        {userAddresses.length >1 && <button type="button">Delete</button>}
+                        <button type="button" className="button " onClick={() => editAddress(address.id, address)}>Edit</button>
+                        {userAddresses.length >1 && <button type="button" className="button profile-container__button--edit" >Delete</button>}
                     </div>
                 </div>
             ))}
