@@ -79,6 +79,12 @@ h1, h2, h3, h4, h5, p {
 .form__error {
     color: rgb(253, 90, 90);
     margin-bottom: 0.5em;
+    letter-spacing: 1.1;
+}
+
+.form__message {
+    margin-bottom: 0.5em;
+    font-size: 0.75rem;
 }
 
 .no-match {
@@ -88,6 +94,8 @@ h1, h2, h3, h4, h5, p {
 .no-match__title {
     margin-bottom: 1em;
 }
+
+
 
 /* Header Styling */
 

@@ -142,8 +142,9 @@ function Register() {
                     <Field name="email" type="email" className="form__input" placeholder="address@email.com"/> 
                     <ErrorMessage name="email" component="div" className="form__error"/>
 
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password">Password: </label>
                     <Field name="password" type="password" className="form__input" placeholder="Password"/> 
+                    <p className="form__message">*Password must be at least 8 characters long with one special character</p>
                     <ErrorMessage name="password" component="div" className="form__error"/>
 
                     <label htmlFor="confirmpw">Confirm Password:</label>
