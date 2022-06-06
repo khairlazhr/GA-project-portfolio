@@ -144,7 +144,8 @@ function Register() {
 
                     <label htmlFor="password">Password: </label>
                     <Field name="password" type="password" className="form__input" placeholder="Password"/> 
-                    <p className="form__message">*Password must be at least 8 characters long with one special character</p>
+                    <p className="form__message">*Password must be at least 8 characters long</p>
+                    <p className="form__message">*Password must include at least 1 letter, number and special character</p>
                     <ErrorMessage name="password" component="div" className="form__error"/>
 
                     <label htmlFor="confirmpw">Confirm Password:</label>
