@@ -12,3 +12,5 @@ For the checking of logic, there were two ways I could have done it. On each res
 This game is split into four phases: "initial", "swap", "gameStart", "endRound". The 'swap' phase was the trickiest and required the most conditional object values to control as I need to adopt the Swap2 rule in order to remove the first-player move advantage. I also faced problems in where my eventListeners would fire off on the board regardless of the game state. All in all, it was interesting to know how to control event listeners depending on the object value
 
 Future implementations/improvements would include player customization and possibly a draw button where players could initiate a draw if they feel the round is not gonna end in a win/loss.
+
+A demo version of this game can be found and played <a href="https://gomoku-game-567.netlify.app">here</a>
