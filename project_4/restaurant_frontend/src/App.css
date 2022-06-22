@@ -728,7 +728,7 @@ h1, h2, h3, h4, h5, p {
     "button";
     row-gap: 1em;
     justify-items: center;
-    color:var(--bg-main-color);
+    color: #fff;
 }
 
 .menu-dialog__container--item {
@@ -761,7 +761,7 @@ h1, h2, h3, h4, h5, p {
     border: 1px solid var(--bg-secondary-color);
     border-radius: 5px;
     background: transparent;
-    color: var(--bg-main-color);
+    color: #fff;
     padding: 0.75em;
     cursor: pointer;
 }
@@ -771,7 +771,7 @@ h1, h2, h3, h4, h5, p {
     border: 1px solid var(--bg-secondary-color);
     border-radius: 5px;
     background: transparent;
-    color: var(--bg-main-color);
+    color: #fff;
     padding: 0.75em;
     cursor: pointer;
     grid-area: button;
@@ -780,6 +780,7 @@ h1, h2, h3, h4, h5, p {
 .cart-modal {
     display: flex;
     flex-direction: column;
+    color: #fff;
 }
 
 .cart-modal__button {
