@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from delivery.models import Cart
 from .models import DeliveryAddress, User, Order
 from django.contrib.auth.hashers import check_password
+from .filters import OrderDateTimeRangeFilter
 
 
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -94,20 +95,15 @@ def profile_detail(request, profile_id):
 #     if request.user.is_authenticated:
 #         user = User.objects.filter(email=request.data["email"])
 #         if user:
-#             current_password = request.data["old_password"]
-#             check_password(current_password, user.password)
-#             if check_password:
-#                 serializer = UserSerializer(instance=user, data=request.data, partial=True)
+#             serializer = UserSerializer(instance=user, data=request.data, partial=True)
                 
-#                 if serializer.is_valid(raise_exception=True):
-#                     serializer.save()
+#             if serializer.is_valid(raise_exception=True):
+#                 serializer.save()
 
-#                     return Response(data= {"message": "Password has been changed successfully"}, status=status.HTTP_200_OK)
-#         else:
-#             raise ValidationError("You have entered an invalid username/password")
+#             return Response(data= {"message": "Password has been changed successfully"}, status=status.HTTP_200_OK)
 
 @api_view(["PATCH"])
-def change_pw(request, profile_id):
+def change_pw(request):
     if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.id)
         current_password = request.data["old_password"]
@@ -124,7 +120,7 @@ def change_pw(request, profile_id):
             raise ValidationError("You have entered an invalid password")
 
 @api_view(["GET", "POST", "PATCH"])
-def address_list(request, profile_id):
+def address_detail(request, profile_id):
     delivery_addresses = DeliveryAddress.objects.filter(user_id=profile_id)
     if request.method == 'GET':
         if request.user.is_authenticated:
@@ -167,8 +163,21 @@ def address_list(request, profile_id):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+# @api_view(["GET"])
+# def order_list(request):
+#     if request.user.is_authenticated:
+#         if request.user.role == 'Admin':
+#             queryset = Order.objects.all()
+#             filterset = OrderDateTimeRangeFilter(request.GET, queryset=queryset)
+#             if filterset.is_valid():
+#                 queryset = filterset.qs
+#             serializer = OrderReadSerializer(instance=queryset, many=True)
+
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 @api_view(["GET"])
-def order_list(request, profile_id):
+def order_detail(request, profile_id):
     orders = Order.objects.filter(user_id=profile_id)
     if request.user.is_authenticated:
         if (profile_id == request.user.id):

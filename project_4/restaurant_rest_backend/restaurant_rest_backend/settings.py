@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'django_filters',
     'accounts.apps.AccountsConfig',
     'bookings.apps.BookingsConfig',
     'delivery.apps.DeliveryConfig',
@@ -85,6 +86,14 @@ WSGI_APPLICATION = 'restaurant_rest_backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+
+    # Local Postgresql Database
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'restaurant'
+    # }
+
+    # SQL Database (Live)
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "cafenacoffee",
@@ -134,6 +143,14 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# Email Backend
+# EMAIL_BACKEND =  'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = '587'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_USER = config('EMAIL_HOST_PW')
 
 
 # Static files (CSS, JavaScript, Images)
@@ -192,6 +209,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
 
 if os.getcwd() == "/app":
     DEBUG = False

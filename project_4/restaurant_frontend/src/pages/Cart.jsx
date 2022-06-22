@@ -33,8 +33,7 @@ function Cart({ cart, fetchCart }) {
     return (
         <div className="cart page-container">
             <div className="cart__list cart__list--spacing">
-                {cart.cart_items
-                    && cart.cart_items.length > 0 
+                {cart?.cart_items?.length > 0 
                     ? <> 
                         <h2 className="cart__title">Cart</h2>
                         {cart.cart_items.map((cartItem) => (

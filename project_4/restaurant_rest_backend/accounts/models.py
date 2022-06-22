@@ -10,7 +10,16 @@ class User(AbstractUser):
     id = models.CharField(max_length=15, default=generate(size=15), editable=False, unique=True, primary_key=True)
     email = models.EmailField(max_length=255, unique=True, error_messages={'unique':"This email has already been registered."})
     mobile_number = models.CharField(max_length=50, unique=True, error_messages={'unique':"This mobile number has already been registered."})
+
+    ADMIN =  'Admin'
+    CUSTOMER = 'Customer'
     
+    ROLE_CHOICES = (
+        (ADMIN, 'Admin'),
+        (CUSTOMER, 'Customer')
+    )
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default= CUSTOMER,blank=True, null=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     

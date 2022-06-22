@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, useLocation } from "react-router-dom"
 import axiosToken from "../utils/axios"
 
 function Profile() {
     const navigate = useNavigate()
+    const location = useLocation()
     const { id } = useParams()
 
     const [userProfile, setUserProfile] = useState("")
@@ -19,8 +20,8 @@ function Profile() {
                     setUserProfile(response.data)
                 }
             } catch(error) {
-                if (error.request){
-    
+                if (error.response.status === 401){
+                    navigate("/login", { state: { from: location } })
                 }
             }
         }

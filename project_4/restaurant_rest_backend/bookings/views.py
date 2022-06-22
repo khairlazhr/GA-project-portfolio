@@ -40,7 +40,7 @@ def reserve(request):
 
 
 @api_view(["DELETE"])
-def bookings(request, booking_id):
+def booking_detail(request, booking_id):
     if request.user.is_authenticated:
         booking = Booking.objects.get(pk=booking_id)
         booking.delete()

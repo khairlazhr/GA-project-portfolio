@@ -28,7 +28,8 @@ import ProfileOrder from "./components/ProfileOrder"
 function App() {
 	let location = useLocation()
 	let navigate = useNavigate()
-	let state = location.state && location.state.background;
+	
+	let state = location?.state?.background;
 
 	const [cart, setCart] = useState({})
 	const [currentUser, setCurrentUser] = useState("")
@@ -75,17 +76,18 @@ function App() {
 		if (accessObject) {
 			function checkExpiryTime() {
 				if ((now - accessData.timeStamp) > refreshDuration) {
-					localStorage.clear()
 					setCart({})
 					setCurrentUser("")
 					setUserId("")
+					localStorage.clear()
 				}
 			}
-			checkExpiryTime()
 
 			setCurrentUser(accessData.name)
 			setUserId(accessData.userId)
 			fetchCart()
+
+			checkExpiryTime()
 		}
 	}, [])
 
@@ -93,11 +95,15 @@ function App() {
     <div className="App">
 		<Header currentUser={currentUser} logout={logout} userId={userId}/>
         <Routes location={state || location}>
+			/* Public Routes */ 
             <Route path="/" element={<Home />} />
             <Route path="/register" element={currentUser ? <Navigate to="/" /> : <Register />} />
             <Route path="/login" element={currentUser ? <Navigate to="/" /> : <Login loginCurrentUser={loginCurrentUser} fetchCart={fetchCart}/>} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/menu/:id" element={<MenuItemView currentUser={currentUser} fetchCart={fetchCart}/>} />
+			<Route path="/bookings" element={<Booking currentUser={currentUser} />}></Route>
+
+			/* ProtectedRoutes */
 			<Route element={<ProtectedRoute />}>
 				<Route path="/cart" element={<Cart cart={cart} fetchCart={fetchCart} />} />
 				<Route path="/profile/:id/" element={<ProfilePage />}>
@@ -110,8 +116,8 @@ function App() {
 					<Route path="orders" element={<ProfileOrder />} />
 				</Route>
 			</Route>
-			<Route path="/bookings" element={<Booking currentUser={currentUser} />}></Route>
-            <Route path="*" element={<NoMatch />} />
+
+			<Route path="*" element={<NoMatch />} />
         </Routes>
 
 		{state && (
