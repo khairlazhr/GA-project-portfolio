@@ -4,8 +4,8 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 require('dotenv').config()
 
-// const Card = require("./models/cards");
-// const cardSeed = require("./models/seed");
+const Card = require("./models/cards");
+const cardSeed = require("./models/seed");
 
 // Controller routes
 const homepageController = require("./controllers/homepageController");
@@ -18,8 +18,6 @@ const mongoURI = process.env.MONGODB_URI;
 const dbConnection = mongoose.connection;
 
 mongoose.connect(mongoURI, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
     ignoreUndefined: true
 });
 
@@ -30,10 +28,17 @@ dbConnection.on("disconnected", () => console.log("The database connection has e
 // Async function needed to resolve the promise carried over from fetch. Data is then fed into the database according to Schema
 // ( async() => {
 //     const cardData = await cardSeed
-//     Card.create(cardData, ( err , data ) => {
-//         if ( err ) console.log ( err.message )
-//         console.log( "added card data" )
-//     })
+//     // Card.create(cardData, ( err , data ) => {
+//     //     if ( err ) console.log ( err.message )
+//     //     console.log( "added card data" )
+//     // })
+//     Card.create(cardData)
+//         .then(() => {
+//             console.log("added card data")
+//         })
+//         .catch((err) => {
+//             console.log(err.message)
+//         })
 // })();
 
 
