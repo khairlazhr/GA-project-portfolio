@@ -4,8 +4,8 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 require('dotenv').config()
 
-const Card = require("./models/cards");
-const cardSeed = require("./models/seed");
+// const Card = require("./models/cards");
+// const cardSeed = require("./models/seed");
 
 // Controller routes
 const homepageController = require("./controllers/homepageController");
